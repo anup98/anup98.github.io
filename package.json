@@ -1,7 +1,7 @@
 {
   "name": "handwriting",
   "version": "0.0.1",
-  "description": "",
+  "description": "Web app to help young kids learn how to write their letters",
   "main": "app.js",
   "dependencies": {
     "paper": "^0.12.0"
