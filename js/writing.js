@@ -1,5 +1,5 @@
 
-var canvas, path, textItem, drawing = false;
+var canvas, path, paths = [], textItem, drawing = false;
 
 function onMouseDown(event) {
 	console.log(event);
@@ -28,13 +28,14 @@ function onMouseDrag(event) {
 
 	// Update the content of the text item to show how many
 	// segments it has:
-	textItem.content = 'Segment count: ' + path.segments.length;
+	textItem.innerText = 'Segment count: ' + path.segments.length;
 }
 
 // When the mouse is released, we simplify the path:
 function onMouseUp(event) {
 	console.log("Mouse Up");
 	drawing = false;
+	paths.push(path)
 	var segmentCount = path.segments.length;
 
 	// When the mouse is released, simplify it:
@@ -46,7 +47,7 @@ function onMouseUp(event) {
 	var newSegmentCount = path.segments.length;
 	var difference = segmentCount - newSegmentCount;
 	var percentage = 100 - Math.round(newSegmentCount / segmentCount * 100);
-	textItem.content = difference + ' of the ' + segmentCount + ' segments were removed. Saving ' + percentage + '%';
+	textItem.innerText = difference + ' of the ' + segmentCount + ' segments were removed. Saving ' + percentage + '%';
 }
 
 
@@ -55,22 +56,18 @@ window.onload = function () {
 	// Get a reference to the canvas object
 	canvas = document.getElementById('writing');
 	textItem = document.getElementById('textItem');
+	clearbtn = document.getElementById('clear');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
-	// Create a Paper.js Path to draw a line into it:
-	// path = new paper.Path();
-	// // Give the stroke a color
-	// path.strokeColor = 'black';
-	// var start = new paper.Point(100, 100);
-	// // Move to start and draw a line from there
-	// path.moveTo(start);
-	// // Note that the plus operator on Point objects does not work
-	// // in JavaScript. Instead, we need to call the add() function:
-	// path.lineTo(start.add([200, -50]));
-	// // Draw the view now:
-	// paper.view.draw();
-
+	// Add event listeners to draw on the canvas
 	canvas.addEventListener('mousedown', onMouseDown);
 	canvas.addEventListener('mousemove', onMouseDrag);
 	canvas.addEventListener('mouseup', onMouseUp);
+	clearbtn.addEventListener('click', clear);
+}
+
+function clear() {
+	paths.forEach(path => {
+		path.clear();
+	});
 }
