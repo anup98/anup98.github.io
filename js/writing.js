@@ -29,11 +29,8 @@ tool.onMouseUp = function(event) {
 window.onload = function () {
 	// Get a reference to the canvas object
 	canvas = document.getElementById('writing');
-	clearbtn = document.getElementById('clear');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
-	
-	clearbtn.addEventListener('click', clear);
 }
 
 function clear() {

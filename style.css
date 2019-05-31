@@ -17,7 +17,7 @@ h6#textItem {
 canvas#writing {
   display:inline-block;
   width: 100vw;
-  height: 33vh;
+  height: 100vh;
 }
 .column {
   float: left;
