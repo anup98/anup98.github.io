@@ -1,5 +1,5 @@
 
-var canvas, path, paths = [], drawing = false;
+var canvas, path, paths = [], drawing = false, rect;
 var tool = new paper.Tool();
 
 tool.onMouseDown = function(event) {
@@ -24,13 +24,15 @@ tool.onMouseUp = function(event) {
 	paths.push(path)
 }
 
-
 // Only executed our code once the DOM is ready.
 window.onload = function () {
 	// Get a reference to the canvas object
 	canvas = document.getElementById('writing');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
+	rect = new paper.Path.Rectangle(10, 20, 200, 100);
+	rect.fillColor = "#000000"
+	console.log(rect);
 }
 
 function clear() {
