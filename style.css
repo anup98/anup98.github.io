@@ -24,11 +24,11 @@ canvas#writing {
   background-position:left;
 }
 canvas#map {
+  overflow:hidden;
   display:inline-block;
-  width: 100vw;
-  height: 100vh;
-  border-style: solid;
-  border-width: 5px;
+  width: 100%;
+  height: 100%;
+  background-image: url('space.jpeg');
 }
 .column {
   float: left;
