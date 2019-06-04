@@ -6,9 +6,10 @@ var pencil = new Tool();
 var startPoints = [];
 var endPoints = [];
 var index = 0;
+var A_DATA;
 
 pencil.onMouseDown = function(event) {
-	if (circ.contains(event.point)){
+	if (letter.start.contains(event.point)){
 		drawing = true;
 		path = new Path({
 			segments: [event.point],
@@ -22,23 +23,17 @@ pencil.onMouseDown = function(event) {
 // at the position of the mouse:
 pencil.onMouseDrag = function(event) {
 	if (!drawing) return;
-	circ.position = event.point;
-	circ.opacity = 0.2;
+	letter.start.position = event.point;
+	letter.start.opacity = 0.2;
 	path.add(event.point);
 	if (!letter.checkBounds(event.point)) {
 		drawing = false;
 		path.clear();
 	}
-	if (endCirc.bounds.contains(circ.bounds) && index <= 1){
-		circ.position = startPoints[index];
-		endCirc.position = endPoints[index];
-		index += 1;
-		circ.opacity = 1;
+	if (letter.end.bounds.contains(event.point)){
+		letter.start.opacity = 1;
 		drawing = false;
-	}else if (endCirc.bounds.contains(circ.bounds) && index == 2){
-		endCirc.visible = false;
-		circ.visible = false;
-		drawing = false;
+		letter.next();
 	}
 
 };
@@ -68,25 +63,42 @@ window.onload = function () {
 	startPoints.push([113,568])
 
 
-	circ = new paper.Path.Circle({
-	center: [295, 80],
-	radius: 15,
-	fillColor: "#0000FF"
-	});
-	endCirc = new paper.Path.Circle({
-	center: [52, 725],
-	radius: 26,
-	fillColor: "#0000FF"
-	});
+	// circ = new paper.Path.Circle({
+	// center: [295, 80],
+	// radius: 25,
+	// fillColor: "#0000FF"
+	// });
+	// endCirc = new paper.Path.Circle({
+	// center: [52, 725],
+	// radius: 26,
+	// fillColor: "#0000FF"
+	// });
 //53,730
 
-	testPath = new Path();
-	testPath.strokeColor = "#FF0000";
-	testPath.strokeWidth = 5;
-	testPath.dashArray = [15,8]
-	testPath.add(new Point(295, 80));
-	testPath.add(new Point(52, 725));
-	letter = new Letter(testPath);
+	// testPath = new Path();
+	// testPath.strokeColor = "#FF0000";
+	// testPath.strokeWidth = 5;
+	// testPath.dashArray = [15,8]
+	// testPath.add(new Point(295, 80));
+	// testPath.add(new Point(52, 725));
+
+	A_DATA = new CompoundPath({
+		children: [
+			new Path({
+				segments: [[295, 80], [52, 725]]
+			}),
+			new Path({
+				segments: [[295, 80], [547, 725]]
+			}),
+			new Path({
+				segments: [[113, 568], [488, 568]]
+			})
+		],
+		strokeColor: '#FF0000',
+		strokeWidth: 5,
+		dashArray: [15,8]
+	});
+	letter = new Letter(A_DATA);
 };
 
 /**
@@ -98,12 +110,19 @@ window.onload = function () {
 class Letter {
 	/**
 	 * Creates an instance of Letter.
-	 * @param {Path} path
+	 * @param {CompoundPath} paths
 	 * @memberof Letter
 	 */
-	constructor(path) {
-		this.path = path;
+	constructor(paths) {
+		this.paths = paths;
+		this.activePath = this.paths.children[0];
+		this.startPoint = this.activePath.firstSegment.point;
+		this.endPoint = this.activePath.lastSegment.point;
+		this.addStartEnd();
 	}
+
+	// TODO: be able to switch active paths once one is completed
+	// TODO: do something when the letter is finished
 
 	/**
 	 * If point is outside 50 pixels from the nearest part of the curve,
@@ -114,6 +133,32 @@ class Letter {
 	 * @memberof Letter
 	 */
 	checkBounds(point) {
-		return (this.path.getNearestLocation(point).distance < 50);
+		return (this.activePath.getNearestLocation(point).distance < 50);
+	}
+
+	next() {
+		this.paths.children[0].remove();
+		this.start.remove();
+		this.end.remove();
+		if (this.paths.isEmpty()) {
+			return;
+		}
+		this.activePath = this.paths.children[0];
+		this.startPoint = this.activePath.firstSegment.point;
+		this.endPoint = this.activePath.lastSegment.point;
+		this.addStartEnd();
+	}
+
+	addStartEnd() {
+		this.start = Path.Circle({
+			center: this.startPoint,
+			radius: 25,
+			fillColor: "#0000FF"
+		});
+		this.end = Path.Circle({
+			center: this.endPoint,
+			radius: 25,
+			fillColor: "#0000aa"
+		});
 	}
 }
