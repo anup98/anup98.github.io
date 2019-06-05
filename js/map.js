@@ -28,11 +28,11 @@ window.onload = function () {
 	});
 
   star1 = new Path.Star({
-    center: new Point(900, 700),
+    center: new Point(900, 500),
     points: 6,
-    radius1: 10,
-    radius2: 18,
-    fillColor: 'white'
+    radius1: 18,
+    radius2: 35,
+    fillColor: 'gold'
   });
 
 	star2 = star1.clone();
@@ -44,10 +44,10 @@ window.onload = function () {
 	text4 = text1.clone();
 	text5 = text1.clone();
 
-	star2.bounds.center = new Point(634, 700);
-	star3.bounds.center = new Point(367, 700);
-	star4.bounds.center = new Point(100, 700);
-	star5.bounds.center = new Point(100, 500);
+	star2.bounds.center = new Point(634, 500);
+	star3.bounds.center = new Point(367, 500);
+	star4.bounds.center = new Point(100, 500);
+	star5.bounds.center = new Point(100, 300);
 
 	text1.position = new Point(star1.bounds.center);
 	text2.position = new Point(star2.bounds.center);
@@ -67,7 +67,7 @@ window.onload = function () {
 	var x5 = new Segment(star5.bounds.center, new Point(-150, 80), null);
 
   var connect = new Path({
-		strokeColor: "white",
+		strokeColor: "blue",
 		strokeWidth: 3
 	});
 
@@ -76,8 +76,9 @@ window.onload = function () {
 	connect.add(x3);
 	connect.add(x4);
 	connect.add(x5);
-
+	var scaler = .2;
 	view.onFrame = function (event){
+		connect.sendToBack();
 		star1.rotate(1);
 		star2.rotate(1);
 		star3.rotate(1);
