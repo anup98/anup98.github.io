@@ -30,9 +30,9 @@ window.onload = function () {
   star1 = new Path.Star({
     center: new Point(900, 500),
     points: 6,
-    radius1: 18,
-    radius2: 35,
-    fillColor: 'gold'
+    radius1: 14,
+    radius2: 27,
+    fillColor: 'white'
   });
 
 	star2 = star1.clone();
@@ -43,6 +43,9 @@ window.onload = function () {
 	text3 = text1.clone();
 	text4 = text1.clone();
 	text5 = text1.clone();
+
+	star1.fillColor = 'gold';
+	star1.scale(1.3);
 
 	star2.bounds.center = new Point(634, 500);
 	star3.bounds.center = new Point(367, 500);

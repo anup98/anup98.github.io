@@ -114,7 +114,7 @@ class Letter {
 		// this.paths.children[0].remove();
 		this.removeStartEnd();
 		if (++this.path_idx >= this.paths.children.length) {
-			window.open("http://anup98.github.io/map.html", "_self");
+			window.location.href = "./map.html"
 			return;
 		}
 		this.activePath = this.paths.children[this.path_idx];
