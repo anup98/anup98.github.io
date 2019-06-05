@@ -1,11 +1,8 @@
 // This is so we don't have to say paper. before everything
 paper.install(window) 
 
-var canvas, path, paths = [], drawing = false, circ, endCirc, testPath, letter;
+var canvas, path, paths = [], drawing = false, letter;
 var pencil = new Tool();
-var startPoints = [];
-var endPoints = [];
-var index = 0;
 var A_DATA;
 
 pencil.onMouseDown = function(event) {
@@ -14,7 +11,7 @@ pencil.onMouseDown = function(event) {
 		path = new Path({
 			segments: [event.point],
 			strokeColor: '#9816d3',
-			strokeWidth: 3
+			strokeWidth: 6
 		});
 	}
 };
@@ -28,24 +25,26 @@ pencil.onMouseDrag = function(event) {
 	path.add(event.point);
 	if (!letter.checkBounds(event.point)) {
 		drawing = false;
-		path.clear();
-	}
-	if (letter.end.bounds.contains(event.point)){
-		letter.start.opacity = 1;
-		drawing = false;
-		letter.next();
+		path.remove();
+		letter.removeStartEnd();
+		letter.addStartEnd();
 	}
 
 };
 
 // When the mouse is released, we simplify the path:
 pencil.onMouseUp = function (event) {
-	if (drawing) {
-		// circ.position = event.point;
-		// circ.opacity = 1;
+	if (!drawing) return;
+	if (letter.end.bounds.contains(event.point)) {
+		letter.start.opacity = 1;
 		drawing = false;
 		paths.push(path);
-		// console.log(event.point);
+		letter.next();
+	} else {
+		drawing = false;
+		path.remove();
+		letter.removeStartEnd();
+		letter.addStartEnd();
 	}
 };
 
@@ -55,32 +54,6 @@ window.onload = function () {
 	canvas = document.getElementById('writing');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
-	// endPoints.push([52,725]);
-	endPoints.push([547,725]);
-	endPoints.push([488,568]);
-	// startPoints.push([295,80]);
-	startPoints.push([295,80]);
-	startPoints.push([113,568])
-
-
-	// circ = new paper.Path.Circle({
-	// center: [295, 80],
-	// radius: 25,
-	// fillColor: "#0000FF"
-	// });
-	// endCirc = new paper.Path.Circle({
-	// center: [52, 725],
-	// radius: 26,
-	// fillColor: "#0000FF"
-	// });
-//53,730
-
-	// testPath = new Path();
-	// testPath.strokeColor = "#FF0000";
-	// testPath.strokeWidth = 5;
-	// testPath.dashArray = [15,8]
-	// testPath.add(new Point(295, 80));
-	// testPath.add(new Point(52, 725));
 
 	A_DATA = new CompoundPath({
 		children: [
@@ -115,7 +88,8 @@ class Letter {
 	 */
 	constructor(paths) {
 		this.paths = paths;
-		this.activePath = this.paths.children[0];
+		this.path_idx = 0;
+		this.activePath = this.paths.children[this.path_idx];
 		this.startPoint = this.activePath.firstSegment.point;
 		this.endPoint = this.activePath.lastSegment.point;
 		this.addStartEnd();
@@ -137,13 +111,13 @@ class Letter {
 	}
 
 	next() {
-		this.paths.children[0].remove();
-		this.start.remove();
-		this.end.remove();
-		if (this.paths.isEmpty()) {
+		// this.paths.children[0].remove();
+		this.removeStartEnd();
+		if (++this.path_idx >= this.paths.children.length) {
+			window.open("http://anup98.github.io/map.html", "_self");
 			return;
 		}
-		this.activePath = this.paths.children[0];
+		this.activePath = this.paths.children[this.path_idx];
 		this.startPoint = this.activePath.firstSegment.point;
 		this.endPoint = this.activePath.lastSegment.point;
 		this.addStartEnd();
@@ -160,5 +134,10 @@ class Letter {
 			radius: 25,
 			fillColor: "#0000aa"
 		});
+	}
+
+	removeStartEnd() {
+		this.start.remove();
+		this.end.remove();
 	}
 }
