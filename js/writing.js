@@ -52,19 +52,29 @@ pencil.onMouseUp = function (event) {
 window.onload = function () {
 	// Get a reference to the canvas object
 	canvas = document.getElementById('writing');
+	var canvas_width = canvas.offsetWidth, canvas_height = canvas.offsetHeight;
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
 
 	A_DATA = new CompoundPath({
 		children: [
 			new Path({
-				segments: [[295, 80], [52, 725]]
+				segments: [
+					[canvas_width * 0.5 , canvas_height * 0.05],
+					[canvas_width * 0.35, canvas_height * 0.7 ]
+				]
 			}),
 			new Path({
-				segments: [[295, 80], [547, 725]]
+				segments: [
+					[canvas_width * 0.5 , canvas_height * 0.05],
+					[canvas_width * 0.65, canvas_height * 0.7 ]
+				]
 			}),
 			new Path({
-				segments: [[113, 568], [488, 568]]
+				segments: [
+					[canvas_width * 0.425, canvas_height * 0.375],
+					[canvas_width * 0.575, canvas_height * 0.375]
+				]
 			})
 		],
 		strokeColor: '#FF0000',
