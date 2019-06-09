@@ -1,16 +1,16 @@
 // This is so we don't have to say paper. before everything
-paper.install(window) 
+paper.install(window);
 
-var canvas, path, paths = [], drawing = false, letter;
-var pencil = new Tool();
-var A_DATA;
+let canvas, path, paths = [], drawing = false, letter;
+let pencil = new paper.Tool();
+let A_DATA;
 
 pencil.onMouseDown = function(event) {
 	if (letter.start.contains(event.point)){
 		drawing = true;
 		path = new Path({
 			segments: [event.point],
-			strokeColor: '#9816d3',
+			strokeColor: '#000000',
 			strokeWidth: 6
 		});
 	}
@@ -52,7 +52,7 @@ pencil.onMouseUp = function (event) {
 window.onload = function () {
 	// Get a reference to the canvas object
 	canvas = document.getElementById('writing');
-	var canvas_width = canvas.offsetWidth, canvas_height = canvas.offsetHeight;
+	let canvas_width = canvas.offsetWidth, canvas_height = canvas.offsetHeight;
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
 
@@ -77,7 +77,7 @@ window.onload = function () {
 				]
 			})
 		],
-		strokeColor: '#FF0000',
+		strokeColor: '#78787a',
 		strokeWidth: 5,
 		dashArray: [15,8]
 	});
@@ -124,7 +124,7 @@ class Letter {
 		// this.paths.children[0].remove();
 		this.removeStartEnd();
 		if (++this.path_idx >= this.paths.children.length) {
-			window.location.href = "./map.html"
+			window.location.href = "./map.html";
 			return;
 		}
 		this.activePath = this.paths.children[this.path_idx];
@@ -137,12 +137,12 @@ class Letter {
 		this.start = Path.Circle({
 			center: this.startPoint,
 			radius: 25,
-			fillColor: "#0000FF"
+			fillColor: "#68ff51"
 		});
 		this.end = Path.Circle({
 			center: this.endPoint,
 			radius: 25,
-			fillColor: "#0000aa"
+			fillColor: "#e7444e"
 		});
 	}
 
