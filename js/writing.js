@@ -130,19 +130,57 @@ window.onload = function () {
 	// 	dashArray: [15,8]
 	// });
 
-	K_DATA = new CompoundPath({
+	// K_DATA = new CompoundPath({
+	// 	children: [
+	// 		new Path({
+	// 			segments: [
+	// 				[0, 0],
+	// 				[0, 100]
+	// 			]
+	// 		}),
+	// 		new Path({
+	// 			segments: [
+	// 				[50, 0],
+	// 				[0, 50],
+	// 				[50 , 100]
+	// 			]
+	// 		})
+	// 	],
+	// 	strokeColor: '#787878',
+	// 	strokeWidth: 5,
+	// 	dashArray: [15,8]
+	// });
+
+	// Q_DATA = new CompoundPath({
+	// 	children: [
+	// 		new Path({
+	// 			segments: [
+	// 				[[50 , 0], [30, 0], [-30, 0]],
+	// 				[[0 , 50], [0, -30], [0, 30]],
+	// 				[[50 , 100], [-30, 0], [30, 0]],
+	// 				[[100 , 50], [0, 30], [0, -30]],
+	// 				[[50 , 0], [30, 0], [-30, 0]]
+	// 			]
+	// 		}),
+	// 		new Path({
+	// 			segments: [
+	// 				[75, 75],
+	// 				[100 , 100]
+	// 			]
+	// 		})
+	// 	],
+	// 	strokeColor: '#787878',
+	// 	strokeWidth: 5,
+	// 	dashArray: [15,8]
+	// });
+
+	S_DATA = new CompoundPath({
 		children: [
 			new Path({
 				segments: [
-					[0, 0],
-					[0, 100]
-				]
-			}),
-			new Path({
-				segments: [
-					[50, 0],
-					[0, 50],
-					[50 , 100]
+					[[40 , 15], null, [-35, -15]],
+					[[25 , 47], [-30, -10], [35, 5]],
+					[[0 , 80], [50, 25], null]
 				]
 			})
 		],
@@ -151,7 +189,7 @@ window.onload = function () {
 		dashArray: [15,8]
 	});
 
-	letter = new Letter(K_DATA);
+	letter = new Letter(S_DATA);
 	letter.scale(3);
 	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 50));
 };
@@ -206,16 +244,17 @@ class Letter {
 	}
 
 	addStartEnd() {
-		this.start = Path.Circle({
-			center: this.startPoint,
-			radius: 25,
-			fillColor: "#68ff51"
-		});
 		this.end = Path.Circle({
 			center: this.endPoint,
 			radius: 25,
 			fillColor: "#e7444e"
 		});
+		this.start = Path.Circle({
+			center: this.startPoint,
+			radius: 25,
+			fillColor: "#68ff51"
+		});
+		// TODO: add arrows to the starting circle
 	}
 
 	removeStartEnd() {
