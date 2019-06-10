@@ -84,7 +84,8 @@ window.onload = function () {
 		dashArray: [15,8]
 	});
 	letter = new Letter(A_DATA);
-	letter.scale(5);
+	letter.scale(3);
+	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 50));
 };
 
 /**
@@ -171,5 +172,13 @@ class Letter {
 	    let x = this.paths.position.x - this.paths.bounds._width/2;
 	    let y = this.paths.position.y - this.paths.bounds._height/2;
 	    return new Point(x, y);
+    }
+
+    getWidth() {
+	    return this.paths.bounds._width;
+    }
+
+    getHeight() {
+	    return this.paths.bounds._height;
     }
 }
