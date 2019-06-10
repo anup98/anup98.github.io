@@ -3,7 +3,7 @@ paper.install(window);
 
 let canvas, path, paths = [], drawing = false, letter;
 let pencil = new paper.Tool();
-let A_DATA;
+let A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
 
 pencil.onMouseDown = function(event) {
 	if (letter.start.contains(event.point)){
@@ -58,24 +58,44 @@ window.onload = function () {
 
 	// Item.importSVG('images/A.svg');
 
-	A_DATA = new CompoundPath({
+	// A_DATA = new CompoundPath({
+	// 	children: [
+	// 		new Path({
+	// 			segments: [
+	// 				[35 , 0],
+	// 				[0, 100]
+	// 			]
+	// 		}),
+	// 		new Path({
+	// 			segments: [
+	// 				[35 , 0],
+	// 				[70, 100]
+	// 			]
+	// 		}),
+	// 		new Path({
+	// 			segments: [
+	// 				[17.5, 50],
+	// 				[52.5, 50]
+	// 			]
+	// 		})
+	// 	],
+	// 	strokeColor: '#787878',
+	// 	strokeWidth: 5,
+	// 	dashArray: [15,8]
+	// });
+
+	D_DATA = new CompoundPath({
 		children: [
 			new Path({
 				segments: [
-					[35 , 0],
+					[0, 0],
 					[0, 100]
 				]
 			}),
 			new Path({
 				segments: [
-					[35 , 0],
-					[70, 100]
-				]
-			}),
-			new Path({
-				segments: [
-					[17.5, 50],
-					[52.5, 50]
+					[[0 , 0], null, [75, 0]],
+					[[0 , 100], [75, 0], null]
 				]
 			})
 		],
@@ -83,7 +103,8 @@ window.onload = function () {
 		strokeWidth: 5,
 		dashArray: [15,8]
 	});
-	letter = new Letter(A_DATA);
+
+	letter = new Letter(D_DATA);
 	letter.scale(3);
 	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 50));
 };
