@@ -84,7 +84,27 @@ window.onload = function () {
 	// 	dashArray: [15,8]
 	// });
 
-	D_DATA = new CompoundPath({
+	// D_DATA = new CompoundPath({
+	// 	children: [
+	// 		new Path({
+	// 			segments: [
+	// 				[0, 0],
+	// 				[0, 100]
+	// 			]
+	// 		}),
+	// 		new Path({
+	// 			segments: [
+	// 				[[0 , 0], null, [75, 0]],
+	// 				[[0 , 100], [75, 0], null]
+	// 			]
+	// 		})
+	// 	],
+	// 	strokeColor: '#787878',
+	// 	strokeWidth: 5,
+	// 	dashArray: [15,8]
+	// });
+
+	F_DATA = new CompoundPath({
 		children: [
 			new Path({
 				segments: [
@@ -94,8 +114,14 @@ window.onload = function () {
 			}),
 			new Path({
 				segments: [
-					[[0 , 0], null, [75, 0]],
-					[[0 , 100], [75, 0], null]
+					[0, 0],
+					[50, 0]
+				]
+			}),
+			new Path({
+				segments: [
+					[0 , 50],
+					[30 , 50]
 				]
 			})
 		],
@@ -104,7 +130,7 @@ window.onload = function () {
 		dashArray: [15,8]
 	});
 
-	letter = new Letter(D_DATA);
+	letter = new Letter(F_DATA);
 	letter.scale(3);
 	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 50));
 };
