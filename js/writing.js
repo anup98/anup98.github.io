@@ -52,36 +52,39 @@ pencil.onMouseUp = function (event) {
 window.onload = function () {
 	// Get a reference to the canvas object
 	canvas = document.getElementById('writing');
-	let canvas_width = canvas.offsetWidth, canvas_height = canvas.offsetHeight;
+	// let canvas_width = canvas.offsetWidth, canvas_height = canvas.offsetHeight;
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
+
+	// Item.importSVG('images/A.svg');
 
 	A_DATA = new CompoundPath({
 		children: [
 			new Path({
 				segments: [
-					[canvas_width * 0.5 , canvas_height * 0.05],
-					[canvas_width * 0.35, canvas_height * 0.7 ]
+					[35 , 0],
+					[0, 100]
 				]
 			}),
 			new Path({
 				segments: [
-					[canvas_width * 0.5 , canvas_height * 0.05],
-					[canvas_width * 0.65, canvas_height * 0.7 ]
+					[35 , 0],
+					[70, 100]
 				]
 			}),
 			new Path({
 				segments: [
-					[canvas_width * 0.425, canvas_height * 0.375],
-					[canvas_width * 0.575, canvas_height * 0.375]
+					[17.5, 50],
+					[52.5, 50]
 				]
 			})
 		],
-		strokeColor: '#78787a',
+		strokeColor: '#787878',
 		strokeWidth: 5,
 		dashArray: [15,8]
 	});
 	letter = new Letter(A_DATA);
+	letter.scale(5);
 };
 
 /**
@@ -150,4 +153,23 @@ class Letter {
 		this.start.remove();
 		this.end.remove();
 	}
+
+	scale(scalar) {
+        this.paths.scale(scalar, this.getPos());
+        this.removeStartEnd();
+        this.addStartEnd();
+    }
+
+    move(point) {
+        this.paths.position.x = point.x + this.paths.bounds._width/2;
+        this.paths.position.y = point.y + this.paths.bounds._height/2;
+        this.removeStartEnd();
+        this.addStartEnd();
+    }
+
+    getPos() {
+	    let x = this.paths.position.x - this.paths.bounds._width/2;
+	    let y = this.paths.position.y - this.paths.bounds._height/2;
+	    return new Point(x, y);
+    }
 }
