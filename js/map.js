@@ -3,6 +3,10 @@ var pencil = new paper.Tool();
 var star1, star2, star3, star4, star5, activeStar;
 var text1, text2, text3, text4, text5;
 
+// TODO: try making an array of stars. This would be much more scalable long-term
+// TODO: add another star for 'S'
+// TODO: put the stars in better places
+
 pencil.onMouseDown = function(event) {
 	if (activeStar.contains(event.point) || text1.contains(event.point)){
 		activeStar.scale(.8);

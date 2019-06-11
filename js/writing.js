@@ -55,8 +55,7 @@ window.onload = function () {
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
 
-	// Item.importSVG('images/A.svg');
-
+	// TODO: Create a json file of Path data to read from so we won't need all of this
 	A_DATA = new CompoundPath({
 		children: [
 			new Path({
@@ -158,7 +157,7 @@ window.onload = function () {
 		]
 	});
 
-	S_DATA = new CompoundPath({
+	S_DATA = new CompoundPath({ // TODO: Fix this 'S'
 		children: [
 			new Path({
 				segments: [
