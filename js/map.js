@@ -1,18 +1,18 @@
 paper.install(window);
 var pencil = new paper.Tool();
-var star1, star2, star3, star4, star5;
+var star1, star2, star3, star4, star5, activeStar;
 var text1, text2, text3, text4, text5;
 
 pencil.onMouseDown = function(event) {
-	if (star1.contains(event.point) || text1.contains(event.point)){
-		star1.scale(.8);
+	if (activeStar.contains(event.point) || text1.contains(event.point)){
+		activeStar.scale(.8);
 	}
 };
 
-pencil.onMouseUp = function (event) {
-	if (star1.contains(event.point) || text1.contains(event.point)){
-		star1.scale(1);
-		document.location = "canvas.html";
+pencil.onMouseUp = function (event) { // TODO: the stars have mousedown events that may work better
+	if (activeStar.contains(event.point) || text1.contains(event.point)){
+		activeStar.scale(1);
+		window.location.href = "canvas.html?letter=A";
 	}
 };
 
@@ -21,6 +21,15 @@ window.onload = function () {
 	canvas = document.getElementById('map');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
+
+	let queryString = window.location.search.substring(1);
+	let query = queryString.split('&');
+	let params = {};
+
+    for (let i = 0; i < query.length; i++) {
+		let temp = query[i].split('=');
+		params[temp[0]] = temp[1];
+    }
 
 	text1 = new PointText({
 		fillColor: 'black',
@@ -44,8 +53,26 @@ window.onload = function () {
 	text4 = text1.clone();
 	text5 = text1.clone();
 
-	star1.fillColor = 'gold';
-	star1.scale(1.3);
+	switch (params['level']) {
+		case '2':
+			activeStar = star2;
+			break;
+		case '3':
+			activeStar = star3;
+			break;
+		case '4':
+			activeStar = star4;
+			break;
+		case '5':
+			activeStar = star5;
+			break;
+		default:
+			activeStar = star1;
+			break;
+    }
+
+	activeStar.fillColor = 'gold';
+	activeStar.scale(1.3);
 
 	star2.bounds.center = new Point(634, 500);
 	star3.bounds.center = new Point(367, 500);

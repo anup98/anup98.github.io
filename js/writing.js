@@ -58,121 +58,121 @@ window.onload = function () {
 
 	// Item.importSVG('images/A.svg');
 
-	// A_DATA = new CompoundPath({
-	// 	children: [
-	// 		new Path({
-	// 			segments: [
-	// 				[35 , 0],
-	// 				[0, 100]
-	// 			]
-	// 		}),
-	// 		new Path({
-	// 			segments: [
-	// 				[35 , 0],
-	// 				[70, 100]
-	// 			]
-	// 		}),
-	// 		new Path({
-	// 			segments: [
-	// 				[17.5, 50],
-	// 				[52.5, 50]
-	// 			]
-	// 		})
-	// 	],
-	// 	strokeColor: '#787878',
-	// 	strokeWidth: 5,
-	// 	dashArray: [15,8]
-	// });
+	A_DATA = new CompoundPath({
+		children: [
+			new Path({
+				segments: [
+					[35 , 0],
+					[0, 100]
+				]
+			}),
+			new Path({
+				segments: [
+					[35 , 0],
+					[70, 100]
+				]
+			}),
+			new Path({
+				segments: [
+					[17.5, 50],
+					[52.5, 50]
+				]
+			})
+		],
+		strokeColor: '#787878',
+		strokeWidth: 5,
+		dashArray: [15,8]
+	});
 
-	// D_DATA = new CompoundPath({
-	// 	children: [
-	// 		new Path({
-	// 			segments: [
-	// 				[0, 0],
-	// 				[0, 100]
-	// 			]
-	// 		}),
-	// 		new Path({
-	// 			segments: [
-	// 				[[0 , 0], null, [75, 0]],
-	// 				[[0 , 100], [75, 0], null]
-	// 			]
-	// 		})
-	// 	],
-	// 	strokeColor: '#787878',
-	// 	strokeWidth: 5,
-	// 	dashArray: [15,8]
-	// });
+	D_DATA = new CompoundPath({
+		children: [
+			new Path({
+				segments: [
+					[0, 0],
+					[0, 100]
+				]
+			}),
+			new Path({
+				segments: [
+					[[0 , 0], null, [75, 0]],
+					[[0 , 100], [75, 0], null]
+				]
+			})
+		],
+		strokeColor: '#787878',
+		strokeWidth: 5,
+		dashArray: [15,8]
+	});
 
-	// F_DATA = new CompoundPath({
-	// 	children: [
-	// 		new Path({
-	// 			segments: [
-	// 				[0, 0],
-	// 				[0, 100]
-	// 			]
-	// 		}),
-	// 		new Path({
-	// 			segments: [
-	// 				[0, 0],
-	// 				[50, 0]
-	// 			]
-	// 		}),
-	// 		new Path({
-	// 			segments: [
-	// 				[0 , 50],
-	// 				[30 , 50]
-	// 			]
-	// 		})
-	// 	],
-	// 	strokeColor: '#787878',
-	// 	strokeWidth: 5,
-	// 	dashArray: [15,8]
-	// });
+	F_DATA = new CompoundPath({
+		children: [
+			new Path({
+				segments: [
+					[0, 0],
+					[0, 100]
+				]
+			}),
+			new Path({
+				segments: [
+					[0, 0],
+					[50, 0]
+				]
+			}),
+			new Path({
+				segments: [
+					[0 , 50],
+					[30 , 50]
+				]
+			})
+		],
+		strokeColor: '#787878',
+		strokeWidth: 5,
+		dashArray: [15,8]
+	});
 
-	// K_DATA = new CompoundPath({
-	// 	children: [
-	// 		new Path({
-	// 			segments: [
-	// 				[0, 0],
-	// 				[0, 100]
-	// 			]
-	// 		}),
-	// 		new Path({
-	// 			segments: [
-	// 				[50, 0],
-	// 				[0, 50],
-	// 				[50 , 100]
-	// 			]
-	// 		})
-	// 	],
-	// 	strokeColor: '#787878',
-	// 	strokeWidth: 5,
-	// 	dashArray: [15,8]
-	// });
+	K_DATA = new CompoundPath({
+		children: [
+			new Path({
+				segments: [
+					[0, 0],
+					[0, 100]
+				]
+			}),
+			new Path({
+				segments: [
+					[50, 0],
+					[0, 50],
+					[50 , 100]
+				]
+			})
+		],
+		strokeColor: '#787878',
+		strokeWidth: 5,
+		dashArray: [15,8]
+	});
 
-	// Q_DATA = new CompoundPath({
-	// 	children: [
-	// 		new Path({
-	// 			segments: [
-	// 				[[50 , 0], [30, 0], [-30, 0]],
-	// 				[[0 , 50], [0, -30], [0, 30]],
-	// 				[[50 , 100], [-30, 0], [30, 0]],
-	// 				[[100 , 50], [0, 30], [0, -30]],
-	// 				[[50 , 0], [30, 0], [-30, 0]]
-	// 			]
-	// 		}),
-	// 		new Path({
-	// 			segments: [
-	// 				[75, 75],
-	// 				[100 , 100]
-	// 			]
-	// 		})
-	// 	],
-	// 	strokeColor: '#787878',
-	// 	strokeWidth: 5,
-	// 	dashArray: [15,8]
-	// });
+	Q_DATA = new CompoundPath({
+		children: [
+			new Path({
+				segments: [
+					[[50 , 0], [30, 0], [-30, 0]],
+					[[0 , 50], [0, -30], [0, 30]],
+					[[50 , 100], [-30, 0], [30, 0]],
+					[[100 , 50], [0, 30], [0, -30]],
+					[[50 , 0], [30, 0], [-30, 0]]
+				]
+			}),
+			new Path({
+				segments: [
+					[75, 75],
+					[100 , 100]
+				]
+			})
+		],
+		strokeColor: '#787878',
+		strokeWidth: 5,
+		dashArray: [15,8]
+	});
 
 	S_DATA = new CompoundPath({
 		children: [
@@ -189,9 +189,41 @@ window.onload = function () {
 		dashArray: [15,8]
 	});
 
-	letter = new Letter(S_DATA);
+	let queryString = window.location.search.substring(1);
+	let query = queryString.split('&');
+	let params = {};
+
+    for (let i = 0; i < query.length; i++) {
+		let temp = query[i].split('=');
+		params[temp[0]] = temp[1];
+    }
+
+	switch (params['letter']) {
+		case 'A':
+			letter = new Letter(A_DATA);
+			break;
+		case 'D':
+			letter = new Letter(D_DATA);
+			break;
+		case 'F':
+			letter = new Letter(F_DATA);
+			break;
+		case 'K':
+			letter = new Letter(K_DATA);
+			break;
+		case 'Q':
+			letter = new Letter(Q_DATA);
+			break;
+		case 'S':
+		default:
+			letter = new Letter(S_DATA);
+			break;
+    }
+
+	// TODO: place and scale letters responsive-ly (or at least tailored to the big iPads)
+    // TODO: pro - gres - sion (first 2 or 3 should be fine)
 	letter.scale(3);
-	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 50));
+	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 150));
 };
 
 /**
@@ -234,7 +266,7 @@ class Letter {
 		// this.paths.children[0].remove();
 		this.removeStartEnd();
 		if (++this.path_idx >= this.paths.children.length) {
-			window.location.href = "./map.html";
+			window.location.href = "./map.html?level=2";
 			return;
 		}
 		this.activePath = this.paths.children[this.path_idx];
