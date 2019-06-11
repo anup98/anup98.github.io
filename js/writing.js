@@ -189,22 +189,28 @@ window.onload = function () {
 	switch (params['letter']) {
 		case 'A':
 			letter = new Letter(A_DATA);
+			letter.nextLevel = 2;
 			break;
 		case 'D':
 			letter = new Letter(D_DATA);
+			letter.nextLevel = 3;
 			break;
 		case 'F':
 			letter = new Letter(F_DATA);
+			letter.nextLevel = 4;
 			break;
 		case 'K':
 			letter = new Letter(K_DATA);
+			letter.nextLevel = 5;
 			break;
 		case 'Q':
 			letter = new Letter(Q_DATA);
+			letter.nextLevel = 6;
 			break;
 		case 'S':
 		default:
 			letter = new Letter(S_DATA);
+			letter.nextLevel = 1;
 			break;
     }
 
@@ -258,7 +264,7 @@ class Letter {
 		// this.paths.children[0].remove();
 		this.removeStartEnd();
 		if (++this.path_idx >= this.paths.children.length) {
-			window.location.href = "./map.html?level=2";
+			window.location.href = "./map.html?level=" + this.nextLevel;
 			return;
 		}
 		this.activePath = this.paths.children[this.path_idx];

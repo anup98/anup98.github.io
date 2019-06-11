@@ -12,7 +12,7 @@ pencil.onMouseDown = function(event) {
 pencil.onMouseUp = function (event) { // TODO: the stars have mousedown events that may work better
 	if (activeStar.contains(event.point) || text1.contains(event.point)){
 		activeStar.scale(1);
-		window.location.href = "canvas.html?letter=A";
+		window.location.href = "canvas.html?letter=" + activeStar.level;
 	}
 };
 
@@ -56,18 +56,23 @@ window.onload = function () {
 	switch (params['level']) {
 		case '2':
 			activeStar = star2;
+			activeStar.level = 'D';
 			break;
 		case '3':
 			activeStar = star3;
+			activeStar.level = 'F';
 			break;
 		case '4':
 			activeStar = star4;
+			activeStar.level = 'K';
 			break;
 		case '5':
 			activeStar = star5;
+			activeStar.level = 'Q';
 			break;
 		default:
 			activeStar = star1;
+			activeStar.level = 'A';
 			break;
     }
 
