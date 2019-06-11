@@ -52,7 +52,6 @@ pencil.onMouseUp = function (event) {
 window.onload = function () {
 	// Get a reference to the canvas object
 	canvas = document.getElementById('writing');
-	// let canvas_width = canvas.offsetWidth, canvas_height = canvas.offsetHeight;
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
 
@@ -78,10 +77,7 @@ window.onload = function () {
 					[52.5, 50]
 				]
 			})
-		],
-		strokeColor: '#787878',
-		strokeWidth: 5,
-		dashArray: [15,8]
+		]
 	});
 
 	D_DATA = new CompoundPath({
@@ -98,10 +94,7 @@ window.onload = function () {
 					[[0 , 100], [75, 0], null]
 				]
 			})
-		],
-		strokeColor: '#787878',
-		strokeWidth: 5,
-		dashArray: [15,8]
+		]
 	});
 
 	F_DATA = new CompoundPath({
@@ -124,10 +117,7 @@ window.onload = function () {
 					[30 , 50]
 				]
 			})
-		],
-		strokeColor: '#787878',
-		strokeWidth: 5,
-		dashArray: [15,8]
+		]
 	});
 
 	K_DATA = new CompoundPath({
@@ -145,10 +135,7 @@ window.onload = function () {
 					[50 , 100]
 				]
 			})
-		],
-		strokeColor: '#787878',
-		strokeWidth: 5,
-		dashArray: [15,8]
+		]
 	});
 
 	Q_DATA = new CompoundPath({
@@ -168,10 +155,7 @@ window.onload = function () {
 					[100 , 100]
 				]
 			})
-		],
-		strokeColor: '#787878',
-		strokeWidth: 5,
-		dashArray: [15,8]
+		]
 	});
 
 	S_DATA = new CompoundPath({
@@ -183,11 +167,15 @@ window.onload = function () {
 					[[0 , 80], [50, 25], null]
 				]
 			})
-		],
-		strokeColor: '#787878',
-		strokeWidth: 5,
-		dashArray: [15,8]
+		]
 	});
+
+	D_DATA.visible = false;
+	A_DATA.visible = false;
+	F_DATA.visible = false;
+	K_DATA.visible = false;
+	Q_DATA.visible = false;
+	S_DATA.visible = false;
 
 	let queryString = window.location.search.substring(1);
 	let query = queryString.split('&');
@@ -240,6 +228,10 @@ class Letter {
 	 */
 	constructor(paths) {
 		this.paths = paths;
+		this.paths.strokeColor = '#787878';
+		this.paths.strokeWidth = 5;
+		this.paths.dashArray = [15,8];
+		this.paths.visible = true;
 		this.path_idx = 0;
 		this.activePath = this.paths.children[this.path_idx];
 		this.startPoint = this.activePath.firstSegment.point;
