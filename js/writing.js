@@ -305,8 +305,8 @@ class Letter {
     }
 
     getPos() {
-	    let x = this.paths.position.x - this.paths.bounds._width/2;
-	    let y = this.paths.position.y - this.paths.bounds._height/2;
+	    var x = this.paths.position.x - this.paths.bounds._width/2;
+	    var y = this.paths.position.y - this.paths.bounds._height/2;
 	    return new Point(x, y);
     }
 
