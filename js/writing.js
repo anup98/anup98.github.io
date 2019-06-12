@@ -176,12 +176,12 @@ window.onload = function () {
 	Q_DATA.visible = false;
 	S_DATA.visible = false;
 
-	let queryString = window.location.search.substring(1);
-	let query = queryString.split('&');
-	let params = {};
+	var queryString = window.location.search.substring(1);
+	var query = queryString.split('&');
+	var params = {};
 
-    for (let i = 0; i < query.length; i++) {
-		let temp = query[i].split('=');
+    for (var i = 0; i < query.length; i++) {
+		var temp = query[i].split('=');
 		params[temp[0]] = temp[1];
     }
 
