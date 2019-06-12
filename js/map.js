@@ -11,6 +11,7 @@ pencil.onMouseDown = function(event) {
 	if (activeStar.contains(event.point) || text1.contains(event.point)){
 		activeStar.scale(.8);
 	}
+	console.log(event.point);
 };
 
 pencil.onMouseUp = function (event) { // TODO: the stars have mousedown events that may work better
@@ -18,6 +19,11 @@ pencil.onMouseUp = function (event) { // TODO: the stars have mousedown events t
 		activeStar.scale(1);
 		window.location.href = "canvas.html?letter=" + activeStar.level;
 	}
+};
+
+window.onresize = function() {
+	window.location.reload(true);
+	console.log("change");
 };
 
 window.onload = function () {
@@ -39,9 +45,12 @@ window.onload = function () {
 		fillColor: 'black',
 		content: '1'
 	});
+	var width = window.innerWidth;
+	var height = window.innerHeight;
 
+	console.log(width, height);
   star1 = new Path.Star({
-    center: new Point(900, 500),
+    center: new Point(width/5, height - 100),
     points: 6,
     radius1: 14,
     radius2: 27,
@@ -83,10 +92,10 @@ window.onload = function () {
 	activeStar.fillColor = 'gold';
 	activeStar.scale(1.3);
 
-	star2.bounds.center = new Point(634, 500);
-	star3.bounds.center = new Point(367, 500);
-	star4.bounds.center = new Point(100, 500);
-	star5.bounds.center = new Point(100, 300);
+	star2.bounds.center = new Point(0.4*width, height - 100);
+	star3.bounds.center = new Point(0.6*width, height - 100);
+	star4.bounds.center = new Point(0.8*width, height - 100);
+	star5.bounds.center = new Point(0.8*width, height - 300);
 
 	text1.position = new Point(star1.bounds.center);
 	text2.position = new Point(star2.bounds.center);
@@ -103,7 +112,7 @@ window.onload = function () {
   var x2 = new Segment(star2.bounds.center);
 	var x3 = new Segment(star3.bounds.center);
 	var x4 = new Segment(star4.bounds.center);
-	var x5 = new Segment(star5.bounds.center, new Point(-150, 80), null);
+	var x5 = new Segment(star5.bounds.center, new Point(150, 80), null);
 
   var connect = new Path({
 		strokeColor: "blue",
@@ -115,7 +124,39 @@ window.onload = function () {
 	connect.add(x3);
 	connect.add(x4);
 	connect.add(x5);
-	var scaler = .2;
+
+	view.onResize = function (event){
+		star1.bounds.center = new Point(0.2*window.innerWidth, window.innerHeight - 100);
+		star2.bounds.center = new Point(0.4*window.innerWidth, window.innerHeight - 100);
+		star3.bounds.center = new Point(0.6*window.innerWidth, window.innerHeight - 100);
+		star4.bounds.center = new Point(0.8*window.innerWidth, window.innerHeight - 100);
+		star5.bounds.center = new Point(0.8*window.innerWidth, window.innerHeight - 300);
+
+		text1.position = new Point(star1.bounds.center);
+		text2.position = new Point(star2.bounds.center);
+		text3.position = new Point(star3.bounds.center);
+		text4.position = new Point(star4.bounds.center);
+		text5.position = new Point(star5.bounds.center);
+
+		text2.content = '2';
+		text3.content = '3';
+		text4.content = '4';
+		text5.content = '5';
+
+		connect.removeSegments();
+
+	  var x1 = new Segment(star1.bounds.center);
+	  var x2 = new Segment(star2.bounds.center);
+		var x3 = new Segment(star3.bounds.center);
+		var x4 = new Segment(star4.bounds.center);
+		var x5 = new Segment(star5.bounds.center, new Point(150, 80), null);
+
+		connect.add(x1);
+		connect.add(x2);
+		connect.add(x3);
+		connect.add(x4);
+		connect.add(x5);
+	}
 	view.onFrame = function (event){
 		connect.sendToBack();
 		star1.rotate(1);
