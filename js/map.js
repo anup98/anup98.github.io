@@ -26,12 +26,12 @@ window.onload = function () {
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
 
-	let queryString = window.location.search.substring(1);
-	let query = queryString.split('&');
-	let params = {};
+	var queryString = window.location.search.substring(1);
+	var query = queryString.split('&');
+	var params = {};
 
-    for (let i = 0; i < query.length; i++) {
-		let temp = query[i].split('=');
+    for (var i = 0; i < query.length; i++) {
+		var temp = query[i].split('=');
 		params[temp[0]] = temp[1];
     }
 

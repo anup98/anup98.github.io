@@ -1,9 +1,9 @@
 // This is so we don't have to say paper. before everything
 paper.install(window);
 
-let canvas, path, paths = [], drawing = false, letter;
-let pencil = new paper.Tool();
-let A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
+var canvas, path, paths = [], drawing = false, letter;
+var pencil = new paper.Tool();
+var A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
 
 pencil.onMouseDown = function(event) {
 	if (letter.start.contains(event.point)){
