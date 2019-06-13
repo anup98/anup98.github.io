@@ -4,6 +4,7 @@ paper.install(window);
 var canvas, path, paths = [], drawing = false, letter, lines = [];
 var pencil = new paper.Tool();
 var A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
+var nextButton;
 
 pencil.onMouseDown = function(event) {
 	if (letter.start.contains(event.point)){
@@ -39,7 +40,9 @@ pencil.onMouseUp = function (event) {
 		letter.start.opacity = 1;
 		drawing = false;
 		paths.push(path);
-		letter.next();
+        if (!letter.next()) {
+            nextButton.visible = true;
+        }
 	} else {
 		drawing = false;
 		path.remove();
@@ -54,6 +57,14 @@ window.onload = function () {
 	canvas = document.getElementById('writing');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
+
+	nextButton = new Shape.Rectangle({
+       topLeft: [canvas.offsetWidth/2 - 50, 50],
+       bottomRight: [canvas.offsetWidth/2 + 50, 90],
+       strokeColor: 'black',
+       fillColor: '#c2c2c2',
+       visible: false
+   });
 
 	// TODO: Create a json file of Path data to read from so we won't need all of this
 	A_DATA = new CompoundPath({
@@ -186,38 +197,46 @@ window.onload = function () {
     }
 
 	switch (params['letter']) {
-		case 'A':
-			letter = new Letter(A_DATA);
-			letter.nextLevel = 2;
-			break;
-		case 'D':
-			letter = new Letter(D_DATA);
-			letter.nextLevel = 3;
-			break;
-		case 'F':
-			letter = new Letter(F_DATA);
-			letter.nextLevel = 4;
-			break;
-		case 'K':
-			letter = new Letter(K_DATA);
-			letter.nextLevel = 5;
-			break;
-		case 'Q':
-			letter = new Letter(Q_DATA);
-			letter.nextLevel = 6;
-			break;
-		case 'S':
-		default:
-			letter = new Letter(S_DATA);
-			letter.scale(1.3297920203154165);
-			letter.nextLevel = 1;
-			break;
-    }
+	    case 'A':
+		    letter = new Letter(A_DATA, params.progression);
+		    letter.nextLevel = 2;
+		    break;
+        case 'D':
+            letter = new Letter(D_DATA, params.progression);
+            letter.nextLevel = 3;
+            break;
+        case 'F':
+            letter = new Letter(F_DATA, params.progression);
+            letter.nextLevel = 4;
+            break;
+        case 'K':
+            letter = new Letter(K_DATA, params.progression);
+            letter.nextLevel = 5;
+            break;
+        case 'Q':
+            letter = new Letter(Q_DATA, params.progression);
+            letter.nextLevel = 6;
+            break;
+        case 'S':
+        default:
+            letter = new Letter(S_DATA, params.progression);
+            letter.nextLevel = 1;
+            break;
+   }
 
 	// TODO: place and scale letters responsive-ly (or at least tailored to the big iPads)
     // TODO: pro - gres - sion (first 2 or 3 should be fine)
 	letter.scale(9/4);
 	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 150));
+
+	nextButton.on('mousedown', function () {
+        if (!nextButton.visible) return;
+        if (parseInt(params['progression'], 10) >= 2) {
+            window.location.href = "./map.html?level=" + letter.nextLevel;
+            return;
+        }
+        window.location.href = "./canvas.html?letter=" + params['letter'] + "&progression=" + (parseInt(params['progression'], 10) + 1);
+    });
 
 	lines[0] = new Path.Line({
         from: [0, 150],
@@ -257,20 +276,36 @@ class Letter {
 	/**
 	 * Creates an instance of Letter.
 	 * @param {CompoundPath} paths
+     * @param {string} progression
 	 * @memberof Letter
 	 */
-	constructor(paths) {
-		this.paths = paths;
-		this.paths.strokeColor = '#787878';
-		this.paths.strokeWidth = 5;
-		this.paths.dashArray = [15,8];
-		this.paths.visible = true;
-		this.path_idx = 0;
-		this.activePath = this.paths.children[this.path_idx];
-		this.startPoint = this.activePath.firstSegment.point;
-		this.endPoint = this.activePath.lastSegment.point;
-		this.addStartEnd();
-	}
+	constructor(paths, progression) {
+        this.paths = paths;
+        this.progression = progression;
+        this.paths.strokeColor = '#787878';
+        this.paths.strokeWidth = 5;
+        this.path_idx = 0;
+        this.activePath = this.paths.children[this.path_idx];
+        this.startPoint = this.activePath.firstSegment.point;
+        this.endPoint = this.activePath.lastSegment.point;
+
+        switch (this.progression) {
+            default:
+            case '0':
+                this.paths.visible = true;
+                this.addStartEnd();
+                break;
+            case '1':
+                this.paths.dashArray = [15, 8];
+                this.paths.visible = true;
+                this.addStartEnd();
+                break;
+            case '2':
+                this.paths.visible = false;
+                this.addStartEnd();
+                break;
+        }
+    }
 
 	// TODO: be able to switch active paths once one is completed
 	// TODO: do something when the letter is finished
@@ -287,18 +322,18 @@ class Letter {
 		return (this.activePath.getNearestLocation(point).distance < 50);
 	}
 
-	next() {
-		// this.paths.children[0].remove();
-		this.removeStartEnd();
-		if (++this.path_idx >= this.paths.children.length) {
-			window.location.href = "./map.html?level=" + this.nextLevel;
-			return;
-		}
-		this.activePath = this.paths.children[this.path_idx];
-		this.startPoint = this.activePath.firstSegment.point;
-		this.endPoint = this.activePath.lastSegment.point;
-		this.addStartEnd();
-	}
+    next() {
+        // this.paths.children[0].remove();
+        this.removeStartEnd();
+        if (++this.path_idx >= this.paths.children.length) {
+            return false;
+        }
+        this.activePath = this.paths.children[this.path_idx];
+        this.startPoint = this.activePath.firstSegment.point;
+        this.endPoint = this.activePath.lastSegment.point;
+        this.addStartEnd();
+        return true;
+    }
 
 	addStartEnd() {
 		this.end = Path.Circle({
