@@ -1,7 +1,7 @@
 // This is so we don't have to say paper. before everything
 paper.install(window);
 
-var canvas, path, paths = [], drawing = false, letter;
+var canvas, path, paths = [], drawing = false, letter, lines = [];
 var pencil = new paper.Tool();
 var A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
 
@@ -209,14 +209,42 @@ window.onload = function () {
 		case 'S':
 		default:
 			letter = new Letter(S_DATA);
+			letter.scale(1.3297920203154165);
 			letter.nextLevel = 1;
 			break;
     }
 
 	// TODO: place and scale letters responsive-ly (or at least tailored to the big iPads)
     // TODO: pro - gres - sion (first 2 or 3 should be fine)
-	letter.scale(3);
+	letter.scale(9/4);
 	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 150));
+
+	lines[0] = new Path.Line({
+        from: [0, 150],
+        to: [canvas.offsetWidth, 150],
+        strokeColor: '#8d97ff',
+        strokeWidth: 3,
+        opacity: 0.5
+    });
+	lines[1] = new Path.Line({
+        from: [0, 150 + letter.getHeight()/2],
+        to: [canvas.offsetWidth, 150 + letter.getHeight()/2],
+        strokeColor: '#8d97ff',
+        strokeWidth: 3,
+        opacity: 0.5,
+        dashArray: [20, 15]
+    });
+	lines[2] = new Path.Line({
+        from: [0, 150 + letter.getHeight()],
+        to: [canvas.offsetWidth, 150 + letter.getHeight()],
+        strokeColor: '#ff858c',
+        strokeWidth: 3,
+        opacity: 0.5
+    });
+
+	lines[0].sendToBack();
+	lines[1].sendToBack();
+	lines[2].sendToBack();
 };
 
 /**
