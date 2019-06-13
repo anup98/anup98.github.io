@@ -1,7 +1,16 @@
 paper.install(window);
 var pencil = new paper.Tool();
+<<<<<<< HEAD
 var star1, star2, star3, star4, star5, star6, activeStar;
 var text1, text2, text3, text4, text5, text6;
+
+// TODO: try making an array of stars. This would be much more scalable long-term
+// TODO: add another star for 'S'
+// TODO: put the stars in better places
+=======
+var star1, star2, star3, star4, star5, activeStar;
+var text1, text2, text3, text4, text5;
+>>>>>>> c513714d113508dc2e7c33a9059813f48c77396a
 
 // TODO: try making an array of stars. This would be much more scalable long-term
 // TODO: add another star for 'S'
@@ -23,6 +32,10 @@ pencil.onMouseUp = function (event) { // TODO: the stars have mousedown events t
 
 window.onresize = function() {
 	window.location.reload(true);
+<<<<<<< HEAD
+=======
+	console.log("change");
+>>>>>>> c513714d113508dc2e7c33a9059813f48c77396a
 };
 
 window.onload = function () {
@@ -92,6 +105,14 @@ window.onload = function () {
 
 	activeStar.fillColor = 'gold';
 	activeStar.scale(1.3);
+<<<<<<< HEAD
+=======
+
+	star2.bounds.center = new Point(0.4*width, height - 100);
+	star3.bounds.center = new Point(0.6*width, height - 100);
+	star4.bounds.center = new Point(0.8*width, height - 100);
+	star5.bounds.center = new Point(0.8*width, height - 300);
+>>>>>>> c513714d113508dc2e7c33a9059813f48c77396a
 
 	star2.bounds.center = new Point(0.4*width, height - 100);
 	star3.bounds.center = new Point(0.6*width, height - 100);
@@ -117,7 +138,10 @@ window.onload = function () {
 	var x3 = new Segment(star3.bounds.center);
 	var x4 = new Segment(star4.bounds.center);
 	var x5 = new Segment(star5.bounds.center, new Point(150, 80), null);
+<<<<<<< HEAD
 	var x6 = new Segment(star6.bounds.center);
+=======
+>>>>>>> c513714d113508dc2e7c33a9059813f48c77396a
 
   var connect = new Path({
 		strokeColor: "blue",
@@ -143,6 +167,14 @@ window.onload = function () {
 		text4.position = new Point(star4.bounds.center);
 		text5.position = new Point(star5.bounds.center);
 
+<<<<<<< HEAD
+=======
+		text2.content = '2';
+		text3.content = '3';
+		text4.content = '4';
+		text5.content = '5';
+
+>>>>>>> c513714d113508dc2e7c33a9059813f48c77396a
 		connect.removeSegments();
 
 	  var x1 = new Segment(star1.bounds.center);
@@ -150,16 +182,23 @@ window.onload = function () {
 		var x3 = new Segment(star3.bounds.center);
 		var x4 = new Segment(star4.bounds.center);
 		var x5 = new Segment(star5.bounds.center, new Point(150, 80), null);
+<<<<<<< HEAD
 		var x6 = new Segment(star6.bounds.center);
+=======
+>>>>>>> c513714d113508dc2e7c33a9059813f48c77396a
 
 		connect.add(x1);
 		connect.add(x2);
 		connect.add(x3);
 		connect.add(x4);
 		connect.add(x5);
+<<<<<<< HEAD
 		connect.add(x6);
 	}
 
+=======
+	}
+>>>>>>> c513714d113508dc2e7c33a9059813f48c77396a
 	view.onFrame = function (event){
 		connect.sendToBack();
 		star1.rotate(1);
