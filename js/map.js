@@ -10,11 +10,13 @@ pencil.onMouseDown = function(event) {
 	if (activeStar.contains(event.point) || text1.contains(event.point)){
 		activeStar.scale(.8);
 		mouse = true;
+	}else {
+		mouse = false;
 	}
 };
 
 pencil.onMouseUp = function (event) { // TODO: the stars have mousedown events that may work better
-	if (mouse = true){
+	if (mouse == true){
 		activeStar.scale(1);
 		mouse = false;
 		window.location.href = "canvas.html?letter=" + activeStar.level;
