@@ -19,7 +19,7 @@ pencil.onMouseUp = function (event) { // TODO: the stars have mousedown events t
 	if (mouse == true){
 		activeStar.scale(1);
 		mouse = false;
-		window.location.href = "canvas.html?letter=" + activeStar.level;
+		window.location.href = "canvas.html?letter=" + activeStar.level + "&progressions=0";
 	}
 };
 

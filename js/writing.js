@@ -196,6 +196,10 @@ window.onload = function () {
 		params[temp[0]] = temp[1];
     }
 
+    if (isNaN(parseInt(params['progression'], 10))) {
+        params['progression'] = 0;
+    }
+
 	switch (params['letter']) {
 	    case 'A':
 		    letter = new Letter(A_DATA, params.progression);
