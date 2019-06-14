@@ -7,7 +7,7 @@ var mouse = false;
 // TODO: try making an array of stars. This would be much more scalable long-term
 
 pencil.onMouseDown = function(event) {
-	if (activeStar.contains(event.point) || text1.contains(event.point)){
+	if (activeStar.contains(event.point)){
 		activeStar.scale(.8);
 		mouse = true;
 	}else {
@@ -125,12 +125,14 @@ window.onload = function () {
 
 
 	view.onResize = function (event){
-		star1.bounds.center = new Point(0.2*window.innerWidth, window.innerHeight - 100);
-		star2.bounds.center = new Point(0.4*window.innerWidth, window.innerHeight - 100);
-		star3.bounds.center = new Point(0.6*window.innerWidth, window.innerHeight - 100);
-		star4.bounds.center = new Point(0.8*window.innerWidth, window.innerHeight - 100);
-		star5.bounds.center = new Point(0.8*window.innerWidth, window.innerHeight - 300);
-		star6.bounds.center = new Point(0.6*window.innerWidth, window.innerHeight - 300);
+		width = window.innerWidth;
+		height = window.innerHeight;
+		star1.bounds.center = new Point(0.2*width, 0.8*height);
+		star2.bounds.center = new Point(0.4*width, 0.8*height);
+		star3.bounds.center = new Point(0.6*width, 0.8*height);
+		star4.bounds.center = new Point(0.8*width, 0.8*height);
+		star5.bounds.center = new Point(0.8*width, 0.6*height);
+		star6.bounds.center = new Point(0.6*width, 0.6*height);
 
 		text1.position = new Point(star1.bounds.center);
 		text2.position = new Point(star2.bounds.center);
