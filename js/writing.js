@@ -1,40 +1,83 @@
 // This is so we don't have to say paper. before everything
 paper.install(window);
 
+<<<<<<< HEAD
 var canvas, path, paths = [], drawing = false, letter, lines = [];
 var pencil = new paper.Tool();
 var A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
+=======
+var canvas, path, paths = [], drawing = false, letter, touch_id;
+var pencil = new paper.Tool();
+var A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
+
+>>>>>>> 053a45a5944e790614345618d3394ed7bf066254
 var nextButton;
 
 pencil.onMouseDown = function(event) {
-	if (letter.start.contains(event.point)){
-		drawing = true;
-		path = new Path({
-			segments: [event.point],
-			strokeColor: '#000000',
-			strokeWidth: 6
-		});
-	}
+    event.preventDefault();
+    if (event.event.type === "touchstart") {
+        for (var i = 0; i < event.event.changedTouches.length; ++i) {
+            if (letter.start.contains([event.event.changedTouches[i].pageX, event.event.changedTouches[i].pageY])) {
+                console.log(event.event.changedTouches[i].identifier);
+                touch_id = event.event.changedTouches[i].identifier;
+                drawing = true;
+                path = new Path({
+                    segments: [event.event.changedTouches[i].pageX, event.event.changedTouches[i].pageY],
+                    strokeColor: '#000000',
+                    strokeWidth: 6
+                });
+            }
+        }
+    } else {
+        if (letter.start.contains(event.point)) {
+            drawing = true;
+            path = new Path({
+                segments: [event.point],
+                strokeColor: '#000000',
+                strokeWidth: 6
+            });
+        }
+    }
 };
 
 // While the user drags the mouse, points are added to the path
 // at the position of the mouse:
 pencil.onMouseDrag = function(event) {
-	if (!drawing) return;
-	letter.start.position = event.point;
-	letter.start.opacity = 0.2;
-	path.add(event.point);
-	if (!letter.checkBounds(event.point)) {
-		drawing = false;
-		path.remove();
-		letter.removeStartEnd();
-		letter.addStartEnd();
-	}
-
+    event.preventDefault();
+    if (!drawing) return;
+    if (event.event.type === "touchmove") {
+        console.log(event.event.changedTouches);
+        for (var i = 0; i < event.event.changedTouches.length; ++i) {
+            console.log(event.event.changedTouches[i].identifier,event.event.changedTouches[i].pageX,event.event.changedTouches[i].pageY);
+            if (event.event.changedTouches[i].identifier === touch_id) {
+                letter.start.position = [event.event.changedTouches[i].pageX, event.event.changedTouches[i].pageY];
+                letter.start.opacity = 0.2;
+                if (!letter.checkBounds(letter.start.position)) {
+                    drawing = false;
+                    path.remove();
+                    letter.removeStartEnd();
+                    letter.addStartEnd();
+                } else {
+                    path.add(letter.start.position);
+                }
+            }
+        }
+    } else {
+        letter.start.position = event.point;
+        letter.start.opacity = 0.2;
+        path.add(event.point);
+        if (!letter.checkBounds(event.point)) {
+            drawing = false;
+            path.remove();
+            letter.removeStartEnd();
+            letter.addStartEnd();
+        }
+    }
 };
 
 // When the mouse is released, we simplify the path:
 pencil.onMouseUp = function (event) {
+<<<<<<< HEAD
 	if (!drawing) return;
 	if (letter.end.bounds.contains(event.point)) {
 		letter.start.opacity = 1;
@@ -49,7 +92,68 @@ pencil.onMouseUp = function (event) {
 		letter.removeStartEnd();
 		letter.addStartEnd();
 	}
+=======
+    event.preventDefault();
+    if (!drawing) return;
+    if (event.event.type === "mouseup") {
+        for (var i = 0; i < event.event.changedTouches.length; ++i) {
+            if (event.event.changedTouches[i].identifier === touch_id) {
+                if (letter.end.contains([event.event.changedTouches[i].pageX, event.event.changedTouches[i].pageY])) {
+                    letter.start.opacity = 1;
+                    drawing = false;
+                    paths.push(path);
+                    if (!letter.next()) {
+                        nextButton.visible = true;
+                    }
+                } else {
+                    drawing = false;
+                    path.remove();
+                    letter.removeStartEnd();
+                    letter.addStartEnd();
+                }
+            }
+        }
+    } else {
+        if (letter.end.bounds.contains(event.point)) {
+            letter.start.opacity = 1;
+            drawing = false;
+            paths.push(path);
+            if (!letter.next()) {
+                nextButton.visible = true;
+            }
+        } else {
+            drawing = false;
+            path.remove();
+            letter.removeStartEnd();
+            letter.addStartEnd();
+        }
+    }
+>>>>>>> 053a45a5944e790614345618d3394ed7bf066254
 };
+
+function sendTouchEvent(x, y, element, eventType) {
+  const touchObj = new Touch({
+    identifier: Date.now(),
+    target: element,
+    clientX: x,
+    clientY: y,
+    radiusX: 2.5,
+    radiusY: 2.5,
+    rotationAngle: 10,
+    force: 0.5,
+  });
+
+  const touchEvent = new TouchEvent(eventType, {
+    cancelable: true,
+    bubbles: true,
+    touches: [touchObj],
+    targetTouches: [],
+    changedTouches: [touchObj],
+    shiftKey: true,
+  });
+
+  element.dispatchEvent(touchEvent);
+}
 
 // Only executed our code once the DOM is ready.
 window.onload = function () {
@@ -59,12 +163,33 @@ window.onload = function () {
 	paper.setup(canvas);
 
 	nextButton = new Shape.Rectangle({
+<<<<<<< HEAD
        topLeft: [canvas.offsetWidth/2 - 50, 50],
        bottomRight: [canvas.offsetWidth/2 + 50, 90],
        strokeColor: 'black',
        fillColor: '#c2c2c2',
        visible: false
    });
+=======
+        topLeft: [canvas.offsetWidth/2 - 50, 50],
+        bottomRight: [canvas.offsetWidth/2 + 50, 90],
+        strokeColor: 'black',
+        fillColor: '#c2c2c2',
+        visible: false
+    });
+
+	view.onFrame = function(event) {
+	    if (typeof Touch !== 'undefined' &&
+            typeof TouchEvent !== 'undefined' &&
+            Touch.length === 1 &&
+            TouchEvent.length === 1) {
+            sendTouchEvent(490, 150, canvas, 'touchstart');
+            sendTouchEvent(490, 150, canvas, 'touchmove');
+            sendTouchEvent(490, 150, canvas, 'touchend');
+        }
+    };
+
+>>>>>>> 053a45a5944e790614345618d3394ed7bf066254
 
 	// TODO: Create a json file of Path data to read from so we won't need all of this
 	A_DATA = new CompoundPath({
@@ -189,6 +314,10 @@ window.onload = function () {
 
 	var queryString = window.location.search.substring(1);
 	var query = queryString.split('&');
+<<<<<<< HEAD
+=======
+	console.log(query);
+>>>>>>> 053a45a5944e790614345618d3394ed7bf066254
 	var params = {};
 
     for (var i = 0; i < query.length; i++) {
@@ -196,8 +325,37 @@ window.onload = function () {
 		params[temp[0]] = temp[1];
     }
 
+<<<<<<< HEAD
     if (isNaN(parseInt(params['progression'], 10))) {
         params['progression'] = 0;
+=======
+	switch (params['letter']) {
+		case 'A':
+			letter = new Letter(A_DATA, params.progression);
+			letter.nextLevel = 2;
+			break;
+		case 'D':
+			letter = new Letter(D_DATA, params.progression);
+			letter.nextLevel = 3;
+			break;
+		case 'F':
+			letter = new Letter(F_DATA, params.progression);
+			letter.nextLevel = 4;
+			break;
+		case 'K':
+			letter = new Letter(K_DATA, params.progression);
+			letter.nextLevel = 5;
+			break;
+		case 'Q':
+			letter = new Letter(Q_DATA, params.progression);
+			letter.nextLevel = 6;
+			break;
+		case 'S':
+		default:
+			letter = new Letter(S_DATA, params.progression);
+			letter.nextLevel = 1;
+			break;
+>>>>>>> 053a45a5944e790614345618d3394ed7bf066254
     }
 
 	switch (params['letter']) {
@@ -235,6 +393,7 @@ window.onload = function () {
 
 	nextButton.on('mousedown', function () {
         if (!nextButton.visible) return;
+<<<<<<< HEAD
         if (parseInt(params['progression'], 10) >= 2) {
             window.location.href = "./map.html?level=" + letter.nextLevel;
             return;
@@ -268,6 +427,10 @@ window.onload = function () {
 	lines[0].sendToBack();
 	lines[1].sendToBack();
 	lines[2].sendToBack();
+=======
+        window.location.href = "./canvas.html?level=" + params['letter'] + "&progression=" + (letter.progression + 1);
+    });
+>>>>>>> 053a45a5944e790614345618d3394ed7bf066254
 };
 
 /**
@@ -280,7 +443,11 @@ class Letter {
 	/**
 	 * Creates an instance of Letter.
 	 * @param {CompoundPath} paths
+<<<<<<< HEAD
      * @param {string} progression
+=======
+     * @param {char} progression
+>>>>>>> 053a45a5944e790614345618d3394ed7bf066254
 	 * @memberof Letter
 	 */
 	constructor(paths, progression) {
@@ -326,6 +493,7 @@ class Letter {
 		return (this.activePath.getNearestLocation(point).distance < 50);
 	}
 
+<<<<<<< HEAD
     next() {
         // this.paths.children[0].remove();
         this.removeStartEnd();
@@ -338,6 +506,20 @@ class Letter {
         this.addStartEnd();
         return true;
     }
+=======
+	next() {
+		// this.paths.children[0].remove();
+		this.removeStartEnd();
+		if (++this.path_idx >= this.paths.children.length) {
+			return false;
+		}
+		this.activePath = this.paths.children[this.path_idx];
+		this.startPoint = this.activePath.firstSegment.point;
+		this.endPoint = this.activePath.lastSegment.point;
+		this.addStartEnd();
+		return true;
+	}
+>>>>>>> 053a45a5944e790614345618d3394ed7bf066254
 
 	addStartEnd() {
 		this.end = Path.Circle({
