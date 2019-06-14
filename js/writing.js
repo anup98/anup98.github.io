@@ -108,30 +108,6 @@ pencil.onMouseUp = function (event) {
     }
 };
 
-function sendTouchEvent(x, y, element, eventType) {
-  const touchObj = new Touch({
-    identifier: Date.now(),
-    target: element,
-    clientX: x,
-    clientY: y,
-    radiusX: 2.5,
-    radiusY: 2.5,
-    rotationAngle: 10,
-    force: 0.5,
-  });
-
-  const touchEvent = new TouchEvent(eventType, {
-    cancelable: true,
-    bubbles: true,
-    touches: [touchObj],
-    targetTouches: [],
-    changedTouches: [touchObj],
-    shiftKey: true,
-  });
-
-  element.dispatchEvent(touchEvent);
-}
-
 // Only executed our code once the DOM is ready.
 window.onload = function () {
 	// Get a reference to the canvas object
@@ -158,6 +134,14 @@ window.onload = function () {
         }
     };
 
+
+	nextButton = new Shape.Rectangle({
+       topLeft: [canvas.offsetWidth/2 - 50, 50],
+       bottomRight: [canvas.offsetWidth/2 + 50, 90],
+       strokeColor: 'black',
+       fillColor: '#c2c2c2',
+       visible: false
+   });
 
 	// TODO: Create a json file of Path data to read from so we won't need all of this
 	A_DATA = new CompoundPath({
@@ -282,12 +266,15 @@ window.onload = function () {
 
 	var queryString = window.location.search.substring(1);
 	var query = queryString.split('&');
-	console.log(query);
 	var params = {};
 
     for (var i = 0; i < query.length; i++) {
 		var temp = query[i].split('=');
 		params[temp[0]] = temp[1];
+    }
+
+    if (isNaN(parseInt(params['progression'], 10))) {
+        params['progression'] = 0;
     }
 
 	switch (params['letter']) {
@@ -320,13 +307,49 @@ window.onload = function () {
 
 	// TODO: place and scale letters responsive-ly (or at least tailored to the big iPads)
     // TODO: pro - gres - sion (first 2 or 3 should be fine)
-	letter.scale(3);
+	letter.scale(9/4);
 	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 150));
 
 	nextButton.on('mousedown', function () {
         if (!nextButton.visible) return;
         window.location.href = "./canvas.html?level=" + params['letter'] + "&progression=" + (letter.progression + 1);
     });
+
+	nextButton.on('mousedown', function () {
+        if (!nextButton.visible) return;
+        if (parseInt(params['progression'], 10) >= 2) {
+            window.location.href = "./map.html?level=" + letter.nextLevel;
+            return;
+        }
+        window.location.href = "./canvas.html?letter=" + params['letter'] + "&progression=" + (parseInt(params['progression'], 10) + 1);
+    });
+
+	lines[0] = new Path.Line({
+        from: [0, 150],
+        to: [canvas.offsetWidth, 150],
+        strokeColor: '#8d97ff',
+        strokeWidth: 3,
+        opacity: 0.5
+    });
+	lines[1] = new Path.Line({
+        from: [0, 150 + letter.getHeight()/2],
+        to: [canvas.offsetWidth, 150 + letter.getHeight()/2],
+        strokeColor: '#8d97ff',
+        strokeWidth: 3,
+        opacity: 0.5,
+        dashArray: [20, 15]
+    });
+	lines[2] = new Path.Line({
+        from: [0, 150 + letter.getHeight()],
+        to: [canvas.offsetWidth, 150 + letter.getHeight()],
+        strokeColor: '#ff858c',
+        strokeWidth: 3,
+        opacity: 0.5
+    });
+
+	lines[0].sendToBack();
+	lines[1].sendToBack();
+	lines[2].sendToBack();
 };
 
 /**
@@ -339,7 +362,7 @@ class Letter {
 	/**
 	 * Creates an instance of Letter.
 	 * @param {CompoundPath} paths
-     * @param {char} progression
+     * @param {string} progression
 	 * @memberof Letter
 	 */
 	constructor(paths, progression) {
