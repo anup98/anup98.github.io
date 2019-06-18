@@ -1,0 +1,37 @@
+runtime: python27
+threadsafe: yes
+
+handlers:
+- url: /
+  static_files: index.html
+  upload: index\.html
+  secure: always
+
+- url: /index.html
+  static_files: index.html
+  upload: index\.html
+  secure: always
+
+- url: /canvas.html
+  static_files: canvas.html
+  upload: canvas\.html
+  secure: always
+
+- url: /map.html
+  static_files: map.html
+  upload: map\.html
+  secure: always
+
+- url: /style
+  static_dir: style/
+  secure: always
+
+- url: /js
+  static_dir: js/
+  secure: always
+
+- url: /images
+  static_dir: images/
+  secure: always
+
+
