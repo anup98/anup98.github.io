@@ -2,143 +2,88 @@
 paper.install(window);
 
 var canvas, path, paths = [], drawing = false, letter, lines = [], touch_id;
-var pencil = new paper.Tool();
 var A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
 
 var nextButton;
 
-
+/**
+ * Gets index of the touch in the changed index array.
+ * If it is not a changed touch but is still a touch, return a -1.
+ * If it is not a touch anymore, return -2.
+ * @param touches Array of current event touches
+ * @param changedTouches Array of current event changed touches
+ * @param id identifier to the touch we are looking for
+ * @returns {number} index of the changed touch, -1, or -2
+ */
+function getTouch(touches, changedTouches, id) {
+    for (var i = 0; i < changedTouches.length; i++) {
+        if (changedTouches[i].identifier === id) return i;
+    }
+    for (var i = 0; i < touches.length; i++) {
+        if (touches[i].identifier === id) return -1;
+    }
+    return -2;
+}
 
 var touch = false;
-var isButton = false;
-function touchStart(){
-    touch = true;
-}
-
-function touchEnd(){
-    touch = false;
-    isButton = false;
-}
-
-function touchmove(ev) {
-    ev.preventDefault();
-    if (!touch)
-        return;
-
+function touchStart(ev){
     //Draw path for each touch
     for (var i = 0; i < ev.changedTouches.length; i++) {
         var x1, y1;
         x1 = ev.changedTouches[i].pageX;
         y1 = ev.changedTouches[i].pageY;
         if (letter.start.contains(new Point(x1,y1))){
-          letter.start.position = new Point(x1,y1);
-          break;
+            touch_id = ev.changedTouches[i].identifier;
+            path = new Path({
+                segments: [x1, y1],
+                strokeColor: '#000000',
+                strokeWidth: 8
+            });
+            touch = true;
+            break;
         }
-
     }
-    console.log(ev.changedTouches);
 }
 
-// pencil.onMouseDown = function(event) {
-//     event.preventDefault();
-//     if (event.event.type === "touchstart") {
-//         for (var i = 0; i < event.event.changedTouches.length; ++i) {
-//             if (letter.start.contains([event.event.changedTouches[i].pageX, event.event.changedTouches[i].pageY])) {
-//                 console.log(event.event.changedTouches[i].identifier);
-//                 touch_id = event.event.changedTouches[i].identifier;
-//                 drawing = true;
-//                 path = new Path({
-//                     segments: [event.event.changedTouches[i].pageX, event.event.changedTouches[i].pageY],
-//                     strokeColor: '#000000',
-//                     strokeWidth: 6
-//                 });
-//             }
-//         }
-//     } else {
-//         if (letter.start.contains(event.point)) {
-//             drawing = true;
-//             path = new Path({
-//                 segments: [event.point],
-//                 strokeColor: '#000000',
-//                 strokeWidth: 6
-//             });
-//         }
-//     }
-// };
+function touchEnd(ev){
+    if (!touch) return;
 
-// While the user drags the mouse, points are added to the path
-// at the position of the mouse:
-// pencil.onMouseDrag = function(event) {
-//     event.preventDefault();
-//     if (!drawing) return;
-//     if (event.event.type === "touchmove") {
-//         console.log(event.event.changedTouches);
-//         for (var i = 0; i < event.event.changedTouches.length; ++i) {
-//             console.log(event.event.changedTouches[i].identifier,event.event.changedTouches[i].pageX,event.event.changedTouches[i].pageY);
-//             if (event.event.changedTouches[i].identifier === touch_id) {
-//                 letter.start.position = [event.event.changedTouches[i].pageX, event.event.changedTouches[i].pageY];
-//                 letter.start.opacity = 0.2;
-//                 if (!letter.checkBounds(letter.start.position)) {
-//                     drawing = false;
-//                     path.remove();
-//                     letter.removeStartEnd();
-//                     letter.addStartEnd();
-//                 } else {
-//                     path.add(letter.start.position);
-//                 }
-//             }
-//         }
-//     } else {
-//         letter.start.position = event.point;
-//         letter.start.opacity = 0.2;
-//         path.add(event.point);
-//         if (!letter.checkBounds(event.point)) {
-//             drawing = false;
-//             path.remove();
-//             letter.removeStartEnd();
-//             letter.addStartEnd();
-//         }
-//     }
-// };
+    var touchIdx = getTouch(ev.touches, ev.changedTouches, touch_id);
+    if (touchIdx >= 0 && letter.end.contains([ev.changedTouches[touchIdx].pageX,
+                                              ev.changedTouches[touchIdx].pageY])) {
+        letter.start.opacity = 1;
+        touch = false;
+        paths.push(path);
+        if (!letter.next()) {
+            nextButton.visible = true;
+        }
+    } else if (touchIdx === -2) {
+        touch = false;
+        path.remove();
+        letter.removeStartEnd();
+        letter.addStartEnd();
+    }
+}
 
-// When the mouse is released, we simplify the path:
-// pencil.onMouseUp = function (event) {
-//     event.preventDefault();
-//     if (!drawing) return;
-//     if (event.event.type === "mouseup") {
-//         for (var i = 0; i < event.event.changedTouches.length; ++i) {
-//             if (event.event.changedTouches[i].identifier === touch_id) {
-//                 if (letter.end.contains([event.event.changedTouches[i].pageX, event.event.changedTouches[i].pageY])) {
-//                     letter.start.opacity = 1;
-//                     drawing = false;
-//                     paths.push(path);
-//                     if (!letter.next()) {
-//                         nextButton.visible = true;
-//                     }
-//                 } else {
-//                     drawing = false;
-//                     path.remove();
-//                     letter.removeStartEnd();
-//                     letter.addStartEnd();
-//                 }
-//             }
-//         }
-//     } else {
-//         if (letter.end.bounds.contains(event.point)) {
-//             letter.start.opacity = 1;
-//             drawing = false;
-//             paths.push(path);
-//             if (!letter.next()) {
-//                 nextButton.visible = true;
-//             }
-//         } else {
-//             drawing = false;
-//             path.remove();
-//             letter.removeStartEnd();
-//             letter.addStartEnd();
-//         }
-//     }
-// };
+function touchmove(ev) {
+    ev.preventDefault();
+    if (!touch) return;
+
+    //Draw path for each touch
+    var touchIdx = getTouch(ev.touches, ev.changedTouches, touch_id);
+    if (touchIdx >= 0 && letter.checkBounds([ev.changedTouches[touchIdx].pageX,
+                                             ev.changedTouches[touchIdx].pageY])) {
+        var x = ev.changedTouches[touchIdx].pageX;
+        var y = ev.changedTouches[touchIdx].pageY;
+        letter.start.position = new Point(x, y);
+        path.add(letter.start.position);
+    } else if (touchIdx !== -1) {
+        touch = false;
+        path.remove();
+        letter.removeStartEnd();
+        letter.addStartEnd();
+    }
+}
 
 // Only executed our code once the DOM is ready.
 window.onload = function () {
@@ -150,6 +95,7 @@ window.onload = function () {
   document.body.addEventListener('touchstart', touchStart, false);
   document.body.addEventListener('touchmove', touchmove, false);
   document.body.addEventListener('touchend', touchEnd, false);
+  document.body.addEventListener('touchcancel', touchEnd, false);
 
 	nextButton = new Shape.Rectangle({
         topLeft: [canvas.offsetWidth/2 - 50, 50],
@@ -157,27 +103,7 @@ window.onload = function () {
         strokeColor: 'black',
         fillColor: '#c2c2c2',
         visible: false
-    });
-
-	// view.onFrame = function(event) {
-	//     if (typeof Touch !== 'undefined' &&
-  //           typeof TouchEvent !== 'undefined' &&
-  //           Touch.length === 1 &&
-  //           TouchEvent.length === 1) {
-  //           sendTouchEvent(490, 150, canvas, 'touchstart');
-  //           sendTouchEvent(490, 150, canvas, 'touchmove');
-  //           sendTouchEvent(490, 150, canvas, 'touchend');
-  //       }
-  //   };
-
-
-	nextButton = new Shape.Rectangle({
-       topLeft: [canvas.offsetWidth/2 - 50, 50],
-       bottomRight: [canvas.offsetWidth/2 + 50, 90],
-       strokeColor: 'black',
-       fillColor: '#c2c2c2',
-       visible: false
-   });
+	});
 
 	// TODO: Create a json file of Path data to read from so we won't need all of this
 	A_DATA = new CompoundPath({
