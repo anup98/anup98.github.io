@@ -1,55 +1,89 @@
 // This is so we don't have to say paper. before everything
 paper.install(window);
 
-var canvas, path, paths = [], drawing = false, letter, lines = [];
-var pencil = new paper.Tool();
+var canvas, path, paths = [], drawing = false, letter, lines = [], touch_id;
 var A_DATA, D_DATA, F_DATA, K_DATA, Q_DATA, S_DATA;
+
 var nextButton;
 
-pencil.onMouseDown = function(event) {
-	if (letter.start.contains(event.point)){
-		drawing = true;
-		path = new Path({
-			segments: [event.point],
-			strokeColor: '#000000',
-			strokeWidth: 6
-		});
-	}
-};
+/**
+ * Gets index of the touch in the changed index array.
+ * If it is not a changed touch but is still a touch, return a -1.
+ * If it is not a touch anymore, return -2.
+ * @param touches Array of current event touches
+ * @param changedTouches Array of current event changed touches
+ * @param id identifier to the touch we are looking for
+ * @returns {number} index of the changed touch, -1, or -2
+ */
+function getTouch(touches, changedTouches, id) {
+    for (var i = 0; i < changedTouches.length; i++) {
+        if (changedTouches[i].identifier === id) return i;
+    }
+    for (var i = 0; i < touches.length; i++) {
+        if (touches[i].identifier === id) return -1;
+    }
+    return -2;
+}
 
-// While the user drags the mouse, points are added to the path
-// at the position of the mouse:
-pencil.onMouseDrag = function(event) {
-	if (!drawing) return;
-	letter.start.position = event.point;
-	letter.start.opacity = 0.2;
-	path.add(event.point);
-	if (!letter.checkBounds(event.point)) {
-		drawing = false;
-		path.remove();
-		letter.removeStartEnd();
-		letter.addStartEnd();
-	}
+var touch = false;
+function touchStart(ev){
+    //Draw path for each touch
+    for (var i = 0; i < ev.changedTouches.length; i++) {
+        var x1, y1;
+        x1 = ev.changedTouches[i].pageX;
+        y1 = ev.changedTouches[i].pageY;
+        if (letter.start.contains(new Point(x1,y1))){
+            touch_id = ev.changedTouches[i].identifier;
+            path = new Path({
+                segments: [x1, y1],
+                strokeColor: '#000000',
+                strokeWidth: 8
+            });
+            touch = true;
+            break;
+        }
+    }
+}
 
-};
+function touchEnd(ev){
+    if (!touch) return;
 
-// When the mouse is released, we simplify the path:
-pencil.onMouseUp = function (event) {
-	if (!drawing) return;
-	if (letter.end.bounds.contains(event.point)) {
-		letter.start.opacity = 1;
-		drawing = false;
-		paths.push(path);
+    var touchIdx = getTouch(ev.touches, ev.changedTouches, touch_id);
+    if (touchIdx >= 0 && letter.end.contains([ev.changedTouches[touchIdx].pageX,
+                                              ev.changedTouches[touchIdx].pageY])) {
+        letter.start.opacity = 1;
+        touch = false;
+        paths.push(path);
         if (!letter.next()) {
             nextButton.visible = true;
         }
-	} else {
-		drawing = false;
-		path.remove();
-		letter.removeStartEnd();
-		letter.addStartEnd();
-	}
-};
+    } else if (touchIdx === -2) {
+        touch = false;
+        path.remove();
+        letter.removeStartEnd();
+        letter.addStartEnd();
+    }
+}
+
+function touchmove(ev) {
+    ev.preventDefault();
+    if (!touch) return;
+
+    //Draw path for each touch
+    var touchIdx = getTouch(ev.touches, ev.changedTouches, touch_id);
+    if (touchIdx >= 0 && letter.checkBounds([ev.changedTouches[touchIdx].pageX,
+                                             ev.changedTouches[touchIdx].pageY])) {
+        var x = ev.changedTouches[touchIdx].pageX;
+        var y = ev.changedTouches[touchIdx].pageY;
+        letter.start.position = new Point(x, y);
+        path.add(letter.start.position);
+    } else if (touchIdx !== -1) {
+        touch = false;
+        path.remove();
+        letter.removeStartEnd();
+        letter.addStartEnd();
+    }
+}
 
 // Only executed our code once the DOM is ready.
 window.onload = function () {
@@ -57,14 +91,19 @@ window.onload = function () {
 	canvas = document.getElementById('writing');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
+  //Listen multitouch event for simultation
+  document.body.addEventListener('touchstart', touchStart, false);
+  document.body.addEventListener('touchmove', touchmove, false);
+  document.body.addEventListener('touchend', touchEnd, false);
+  document.body.addEventListener('touchcancel', touchEnd, false);
 
 	nextButton = new Shape.Rectangle({
-       topLeft: [canvas.offsetWidth/2 - 50, 50],
-       bottomRight: [canvas.offsetWidth/2 + 50, 90],
-       strokeColor: 'black',
-       fillColor: '#c2c2c2',
-       visible: false
-   });
+        topLeft: [canvas.offsetWidth/2 - 50, 50],
+        bottomRight: [canvas.offsetWidth/2 + 50, 90],
+        strokeColor: 'black',
+        fillColor: '#c2c2c2',
+        visible: false
+	});
 
 	// TODO: Create a json file of Path data to read from so we won't need all of this
 	A_DATA = new CompoundPath({
@@ -201,37 +240,42 @@ window.onload = function () {
     }
 
 	switch (params['letter']) {
-	    case 'A':
-		    letter = new Letter(A_DATA, params.progression);
-		    letter.nextLevel = 2;
-		    break;
-        case 'D':
-            letter = new Letter(D_DATA, params.progression);
-            letter.nextLevel = 3;
-            break;
-        case 'F':
-            letter = new Letter(F_DATA, params.progression);
-            letter.nextLevel = 4;
-            break;
-        case 'K':
-            letter = new Letter(K_DATA, params.progression);
-            letter.nextLevel = 5;
-            break;
-        case 'Q':
-            letter = new Letter(Q_DATA, params.progression);
-            letter.nextLevel = 6;
-            break;
-        case 'S':
-        default:
-            letter = new Letter(S_DATA, params.progression);
-            letter.nextLevel = 1;
-            break;
-   }
+		case 'A':
+			letter = new Letter(A_DATA, params.progression);
+			letter.nextLevel = 2;
+			break;
+		case 'D':
+			letter = new Letter(D_DATA, params.progression);
+			letter.nextLevel = 3;
+			break;
+		case 'F':
+			letter = new Letter(F_DATA, params.progression);
+			letter.nextLevel = 4;
+			break;
+		case 'K':
+			letter = new Letter(K_DATA, params.progression);
+			letter.nextLevel = 5;
+			break;
+		case 'Q':
+			letter = new Letter(Q_DATA, params.progression);
+			letter.nextLevel = 6;
+			break;
+		case 'S':
+		default:
+			letter = new Letter(S_DATA, params.progression);
+			letter.nextLevel = 1;
+			break;
+    }
 
 	// TODO: place and scale letters responsive-ly (or at least tailored to the big iPads)
     // TODO: pro - gres - sion (first 2 or 3 should be fine)
 	letter.scale(9/4);
 	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 150));
+
+	nextButton.on('mousedown', function () {
+        if (!nextButton.visible) return;
+        window.location.href = "./canvas.html?level=" + params['letter'] + "&progression=" + (letter.progression + 1);
+    });
 
 	nextButton.on('mousedown', function () {
         if (!nextButton.visible) return;
@@ -326,18 +370,18 @@ class Letter {
 		return (this.activePath.getNearestLocation(point).distance < 50);
 	}
 
-    next() {
-        // this.paths.children[0].remove();
-        this.removeStartEnd();
-        if (++this.path_idx >= this.paths.children.length) {
-            return false;
-        }
-        this.activePath = this.paths.children[this.path_idx];
-        this.startPoint = this.activePath.firstSegment.point;
-        this.endPoint = this.activePath.lastSegment.point;
-        this.addStartEnd();
-        return true;
-    }
+	next() {
+		// this.paths.children[0].remove();
+		this.removeStartEnd();
+		if (++this.path_idx >= this.paths.children.length) {
+			return false;
+		}
+		this.activePath = this.paths.children[this.path_idx];
+		this.startPoint = this.activePath.firstSegment.point;
+		this.endPoint = this.activePath.lastSegment.point;
+		this.addStartEnd();
+		return true;
+	}
 
 	addStartEnd() {
 		this.end = Path.Circle({
