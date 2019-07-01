@@ -25,7 +25,7 @@ pencil.onMouseUp = function (event) { // TODO: the stars have mousedown events t
 
 window.onload = function () {
 	// Get a reference to the canvas object
-	canvas = document.getElementById('map');
+	var canvas = document.getElementById('map');
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
 
