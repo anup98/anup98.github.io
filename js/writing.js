@@ -85,6 +85,21 @@ function touchmove(ev) {
     }
 }
 
+function Sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    };
+    this.stop = function(){
+        this.sound.pause();
+    };
+}
+
 // Only executed our code once the DOM is ready.
 window.onload = function () {
 	// Get a reference to the canvas object
@@ -92,6 +107,10 @@ window.onload = function () {
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
   //Listen multitouch event for simultation
+  // document.body.addEventListener('onmousedown', touchStart, false);
+  // document.body.addEventListener('onmousemove', touchmove, false);
+  // document.body.addEventListener('onmouseup', touchEnd, false);
+  // document.body.addEventListener('onmouseout', touchEnd, false);
   document.body.addEventListener('touchstart', touchStart, false);
   document.body.addEventListener('touchmove', touchmove, false);
   document.body.addEventListener('touchend', touchEnd, false);
@@ -242,27 +261,33 @@ window.onload = function () {
 	switch (params['letter']) {
 		case 'A':
 			letter = new Letter(A_DATA, params.progression);
+			letter.sound = new Sound('sounds/Letter_A.m4a');
 			letter.nextLevel = 2;
 			break;
 		case 'D':
 			letter = new Letter(D_DATA, params.progression);
+			letter.sound = new Sound('sounds/Letter_D.m4a');
 			letter.nextLevel = 3;
 			break;
 		case 'F':
 			letter = new Letter(F_DATA, params.progression);
+			letter.sound = new Sound('sounds/Letter_F.m4a');
 			letter.nextLevel = 4;
 			break;
 		case 'K':
 			letter = new Letter(K_DATA, params.progression);
+			letter.sound = new Sound('sounds/Letter_K.m4a');
 			letter.nextLevel = 5;
 			break;
 		case 'Q':
 			letter = new Letter(Q_DATA, params.progression);
+			letter.sound = new Sound('sounds/Letter_Q.m4a');
 			letter.nextLevel = 6;
 			break;
 		case 'S':
 		default:
 			letter = new Letter(S_DATA, params.progression);
+			letter.sound = new Sound('sounds/Letter_S.m4a');
 			letter.nextLevel = 1;
 			break;
     }
@@ -271,6 +296,7 @@ window.onload = function () {
     // TODO: pro - gres - sion (first 2 or 3 should be fine)
 	letter.scale(9/4);
 	letter.move(new Point(canvas.offsetWidth/2 - letter.getWidth()/2, 150));
+	letter.sound.play();
 
 	nextButton.on('mousedown', function () {
         if (!nextButton.visible) return;
