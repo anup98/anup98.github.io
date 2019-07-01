@@ -18,6 +18,7 @@ h6#textItem {
   margin: 0;
 }
 canvas#writing {
+  touch-action: none;
   display:inline-block;
   width: 100vw;
   height: 100vh;
@@ -25,6 +26,7 @@ canvas#writing {
   background-position:left;
 }
 canvas#map {
+  touch-action: none;
   overflow:hidden;
   display:inline-block;
   width: 100%;

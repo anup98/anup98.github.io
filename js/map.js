@@ -1,7 +1,7 @@
 paper.install(window);
 var pencil = new paper.Tool();
-var star1, star2, star3, star4, star5, activeStar;
-var text1, text2, text3, text4, text5;
+var star1, star2, star3, star4, star5, star6, activeStar;
+var text1, text2, text3, text4, text5, text6;
 var mouse = false;
 
 // TODO: try making an array of stars. This would be much more scalable long-term
