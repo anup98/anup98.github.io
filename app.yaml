@@ -30,8 +30,16 @@ handlers:
   static_dir: js/
   secure: always
 
+- url: /dist/js
+  static_dir: dist/js/
+  secure: always
+
 - url: /images
   static_dir: images/
+  secure: always
+
+- url: /sounds
+  static_dir: sounds/
   secure: always
 
 

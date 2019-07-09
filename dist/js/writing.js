@@ -42,11 +42,12 @@ function getTouch(touches, changedTouches, id) {
 var touch = false;
 
 function touchStart(ev) {
-  //Draw path for each touch
+  ev.preventDefault(); //Draw path for each touch
+
   for (var i = 0; i < ev.changedTouches.length; i++) {
     var x1, y1;
-    x1 = ev.changedTouches[i].pageX;
-    y1 = ev.changedTouches[i].pageY;
+    x1 = ev.changedTouches[i].clientX;
+    y1 = ev.changedTouches[i].clientY;
 
     if (letter.start.contains(new Point(x1, y1))) {
       touch_id = ev.changedTouches[i].identifier;
@@ -62,10 +63,12 @@ function touchStart(ev) {
 }
 
 function touchEnd(ev) {
+  ev.preventDefault();
   if (!touch) return;
+  console.log(ev);
   var touchIdx = getTouch(ev.touches, ev.changedTouches, touch_id);
 
-  if (touchIdx >= 0 && letter.end.contains([ev.changedTouches[touchIdx].pageX, ev.changedTouches[touchIdx].pageY])) {
+  if (touchIdx >= 0 && letter.end.contains([ev.changedTouches[touchIdx].clientX, ev.changedTouches[touchIdx].clientY])) {
     letter.start.opacity = 1;
     touch = false;
     paths.push(path);
@@ -87,9 +90,9 @@ function touchmove(ev) {
 
   var touchIdx = getTouch(ev.touches, ev.changedTouches, touch_id);
 
-  if (touchIdx >= 0 && letter.checkBounds([ev.changedTouches[touchIdx].pageX, ev.changedTouches[touchIdx].pageY])) {
-    var x = ev.changedTouches[touchIdx].pageX;
-    var y = ev.changedTouches[touchIdx].pageY;
+  if (touchIdx >= 0 && letter.checkBounds([ev.changedTouches[touchIdx].clientX, ev.changedTouches[touchIdx].clientY])) {
+    var x = ev.changedTouches[touchIdx].clientX;
+    var y = ev.changedTouches[touchIdx].clientY;
     letter.start.position = new Point(x, y);
     path.add(letter.start.position);
   } else if (touchIdx !== -1) {
@@ -122,12 +125,15 @@ window.onload = function () {
   // Get a reference to the canvas object
   canvas = document.getElementById('writing'); // Create an empty project and a view for the canvas:
 
-  paper.setup(canvas); //Listen multitouch event for simultation
-  // document.body.addEventListener('onmousedown', touchStart, false);
-  // document.body.addEventListener('onmousemove', touchmove, false);
-  // document.body.addEventListener('onmouseup', touchEnd, false);
-  // document.body.addEventListener('onmouseout', touchEnd, false);
+  paper.setup(canvas);
+  window.addEventListener('touchmove', function (e) {
+    e.preventDefault();
+  }, false); //Listen multitouch event for simultation
 
+  document.body.addEventListener('onmousedown', touchStart, false);
+  document.body.addEventListener('onmousemove', touchmove, false);
+  document.body.addEventListener('onmouseup', touchEnd, false);
+  document.body.addEventListener('onmouseout', touchEnd, false);
   document.body.addEventListener('touchstart', touchStart, false);
   document.body.addEventListener('touchmove', touchmove, false);
   document.body.addEventListener('touchend', touchEnd, false);
