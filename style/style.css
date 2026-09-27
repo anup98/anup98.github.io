@@ -127,9 +127,6 @@ h1, h2, h3 { line-height: 1.2; margin: 0; }
   font-weight: 500;
 }
 .nav-links a:hover { color: var(--text); text-decoration: none; }
-.nav-resume {
-  color: var(--accent-strong) !important;
-}
 .nav-toggle {
   display: none;
   flex-direction: column;
