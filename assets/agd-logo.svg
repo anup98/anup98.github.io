@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="AGD">
+  <rect width="400" height="400" rx="28" fill="#faf9f5"/>
+  <rect x="48" y="48" width="14" height="32" fill="#d97757"/>
+  <text x="200" y="200" text-anchor="middle" dominant-baseline="central"
+        font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-weight="800" font-size="52">
+    <tspan fill="#d97757">&lt;</tspan><tspan fill="#141413">AGD</tspan><tspan fill="#d97757">/&gt;</tspan>
+  </text>
+</svg>

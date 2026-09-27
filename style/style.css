@@ -10,35 +10,35 @@
   --border: #232833;
   --text: #e6e9ef;
   --text-muted: #97a0b3;
-  --accent: #5eead4;
-  --accent-strong: #22d3ee;
-  --accent-contrast: #06110f;
+  --accent: #d97757;
+  --accent-strong: #eb9a6f;
+  --accent-contrast: #141413;
   --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
 :root[data-theme="light"] {
-  --bg: #fbfbfc;
+  --bg: #faf9f5;
   --bg-elevated: #ffffff;
-  --border: #e2e5eb;
-  --text: #1a1d23;
-  --text-muted: #5b6272;
-  --accent: #0f9e8e;
-  --accent-strong: #0891b2;
-  --accent-contrast: #ffffff;
-  --shadow: 0 8px 24px rgba(20, 25, 35, 0.08);
+  --border: #e7e2d8;
+  --text: #141413;
+  --text-muted: #6b6459;
+  --accent: #b8532f;
+  --accent-strong: #a8462a;
+  --accent-contrast: #faf9f5;
+  --shadow: 0 8px 24px rgba(20, 16, 12, 0.08);
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --bg: #fbfbfc;
+    --bg: #faf9f5;
     --bg-elevated: #ffffff;
-    --border: #e2e5eb;
-    --text: #1a1d23;
-    --text-muted: #5b6272;
-    --accent: #0f9e8e;
-    --accent-strong: #0891b2;
-    --accent-contrast: #ffffff;
-    --shadow: 0 8px 24px rgba(20, 25, 35, 0.08);
+    --border: #e7e2d8;
+    --text: #141413;
+    --text-muted: #6b6459;
+    --accent: #b8532f;
+    --accent-strong: #a8462a;
+    --accent-contrast: #faf9f5;
+    --shadow: 0 8px 24px rgba(20, 16, 12, 0.08);
   }
 }
 
@@ -109,12 +109,8 @@ h1, h2, h3 { line-height: 1.2; margin: 0; }
 .brand-mark {
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 13px;
-  color: var(--accent-contrast);
-  background: var(--accent);
-  border-radius: 6px;
-  padding: 4px 7px;
-  letter-spacing: 0.02em;
+  font-size: 14px;
+  color: var(--text);
 }
 .brand-name {
   font-weight: 600;
@@ -241,20 +237,14 @@ h1, h2, h3 { line-height: 1.2; margin: 0; }
 }
 .section-tight { padding: 40px 0; }
 .section-title {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
+  font-family: var(--font-mono);
   font-size: 1.5rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
   margin-bottom: 28px;
 }
-.tag {
-  font-family: var(--font-mono);
-  font-size: 13px;
+.bracket {
   color: var(--accent);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 2px 7px;
 }
 .section-note {
   color: var(--text-muted);
@@ -333,6 +323,9 @@ h1, h2, h3 { line-height: 1.2; margin: 0; }
   background: color-mix(in srgb, var(--accent-strong) 12%, transparent);
   border-radius: 5px;
   padding: 3px 8px;
+}
+.projects-footnote {
+  margin: 24px 0 0;
 }
 
 /* ---------- Skills ---------- */
