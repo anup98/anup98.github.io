@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anup Diwakar — Lead Software Engineer</title>
+<meta name="description" content="Anup Diwakar, Vice President, Lead Software Engineer building distributed trading and risk platforms in fintech.">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="style/style.css" rel="stylesheet">
+<script>
+(function() {
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="#top" aria-label="Anup Diwakar, home">
+      <span class="brand-mark">AD</span>
+      <span class="brand-name">Anup Diwakar</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a class="nav-resume" href="resume.html">Resume</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"></path></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section id="top" class="hero">
+    <div class="wrap">
+      <p class="hero-kicker">$ whoami</p>
+      <h1 class="hero-name">Anup Diwakar</h1>
+      <p class="hero-title">Vice President, Lead Software Engineer</p>
+      <p class="hero-sub">Building distributed trading, risk, and PnL platforms for fixed income and securitized products &mdash; New York, NY</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="resume.html">View résumé</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="wrap">
+      <h2 class="section-title"><span class="tag">01</span>About</h2>
+      <p class="about-text">
+        I'm a software engineer based in New York City. I currently work as Vice President, Lead Software Engineer
+        at Wells Fargo, where I architect and lead development of a multi&#8209;asset trading, risk, and PnL platform
+        covering Non&#8209;Agency, Agency, Credit, Municipal, and Whole Loan products. Before that, I built backend
+        services and trader tools at Citigroup. I hold a B.S. in Data Science from the University of Michigan.
+      </p>
+      <p class="about-text">
+        My day&#8209;to&#8209;day work centers on event&#8209;driven microservices: data ingestion, position and
+        trade lifecycle, risk calculation, and the shared libraries other teams build on top of. I also spend
+        significant time on roadmap and requirements work, translating trader and risk needs into technical
+        specifications for the engineering team.
+      </p>
+    </div>
+  </section>
+
+  <section id="experience" class="section">
+    <div class="wrap">
+      <h2 class="section-title"><span class="tag">02</span>Experience</h2>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h3 class="job-role">Vice President, Lead Software Engineer</h3>
+            <p class="job-company">Wells Fargo &middot; New York, NY</p>
+          </div>
+          <p class="job-dates">Apr 2022 &ndash; Present</p>
+        </div>
+        <ul class="job-bullets">
+          <li>Lead engineer on a platform of roughly 100 microservices, owning 40 directly and setting technical direction, engineering standards, and design and code review across the rest.</li>
+          <li>Architected and built a greenfield multi&#8209;asset trading, risk, and PnL platform covering Non&#8209;Agency, Agency, Credit, Municipal, and Whole Loan products, replacing legacy infrastructure with event&#8209;driven microservices and using Copilot and Claude as accelerators along the way.</li>
+          <li>Own all data ingress into the platform, including vendor feeds and internal systems, along with the pipelines that normalize and distribute that data.</li>
+          <li>Technical owner of position, trade lifecycle, and risk management; designed the core domain models that made the platform the system of record for over 100,000 positions and trades.</li>
+          <li>Built the firm's standardization libraries used by teams across other asset classes, and own the platform APIs those teams integrate with.</li>
+          <li>Own the client pricing system, carrying client pricing requests to traders, capturing the price, and publishing it downstream to client&#8209;facing systems.</li>
+          <li>Set the quarterly roadmap, scope requirements directly with traders and risk, and run scrum, driving work through architecture, build, QA, UAT, rollout, and user training.</li>
+          <li>Led the team off legacy tooling across three migrations: Jenkins to GitHub Actions, uDeploy to Harness, and PCF to OpenShift.</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div>
+            <h3 class="job-role">Software Engineer</h3>
+            <p class="job-company">Citigroup &middot; New York, NY</p>
+          </div>
+          <p class="job-dates">Dec 2020 &ndash; Apr 2022</p>
+        </div>
+        <ul class="job-bullets">
+          <li>Modernized securities trading applications, moving legacy systems toward event&#8209;driven architecture with Kafka and Ignite.</li>
+          <li>Built backend services and trader tools that improved workflows, performance, and data access.</li>
+          <li>Supported production trading platforms, tuned databases, and cleaned up legacy components.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="wrap">
+      <h2 class="section-title"><span class="tag">03</span>Projects</h2>
+      <p class="section-note">Selected systems from my work in financial technology infrastructure, spanning platform architecture, shared libraries, and real&#8209;time data processing.</p>
+
+      <div class="cards">
+        <article class="card">
+          <h3 class="card-title">Multi-Asset Trading &amp; Position Platform</h3>
+          <p class="card-body">
+            Greenfield platform covering Non&#8209;Agency, Agency, Credit, Municipal, and Whole Loan asset classes,
+            built to replace legacy infrastructure with event&#8209;driven microservices. Owns the core domain
+            models for position, trade lifecycle, and risk, making it the system of record for over 100,000
+            positions and trades, along with the data ingestion pipelines that feed it from vendor and internal
+            sources.
+          </p>
+          <ul class="card-tags">
+            <li>Java</li><li>Spring Boot</li><li>Kubernetes</li><li>OpenShift</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Real-Time Risk &amp; Reconciliation Engine</h3>
+          <p class="card-body">
+            Distributed services on Kafka, Redis, Ignite, and Angular for real&#8209;time data ingestion,
+            reconciliation, and risk calculation. Designed the caching and data grid layer across Redis, Coherence,
+            and Ignite, then load tested the platform to size it. Built the reconciliation frameworks used to
+            validate new platform output against legacy systems during cutover.
+          </p>
+          <ul class="card-tags">
+            <li>Kafka</li><li>Redis</li><li>Ignite</li><li>Coherence</li><li>Angular</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Cross-Asset Standardization Libraries</h3>
+          <p class="card-body">
+            Shared libraries used by teams across other asset classes to build their own systems on the same
+            foundation, plus the platform APIs those teams integrate with. Also owns the client pricing system,
+            carrying pricing requests to traders and publishing prices downstream to client&#8209;facing systems.
+          </p>
+          <ul class="card-tags">
+            <li>Java</li><li>Spring Boot</li><li>REST</li><li>WebSockets</li>
+          </ul>
+        </article>
+      </div>
+
+      <p class="section-note projects-footnote">Elsewhere: retired legacy CI/CD and deployment tooling across three migrations, and cut Bloomberg BPIPE and Yield Book costs by reworking how the platform requests market data.</p>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <div class="wrap">
+      <h2 class="section-title"><span class="tag">04</span>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h3>Languages &amp; Frameworks</h3>
+          <p>Java, Python, Spring Boot, Angular</p>
+        </div>
+        <div class="skill-group">
+          <h3>Messaging &amp; Streaming</h3>
+          <p>Kafka, Solace</p>
+        </div>
+        <div class="skill-group">
+          <h3>Databases &amp; Caching</h3>
+          <p>MSSQL, Oracle, MongoDB, Redis, Coherence, Ignite</p>
+        </div>
+        <div class="skill-group">
+          <h3>Market Data</h3>
+          <p>Bloomberg BPIPE and BLPAPI, Yield Book, Markit, Intex</p>
+        </div>
+        <div class="skill-group">
+          <h3>Cloud &amp; Infrastructure</h3>
+          <p>AWS, Azure, Kubernetes, OpenShift, PCF, GitHub Actions, Harness, Jenkins, Autosys</p>
+        </div>
+        <div class="skill-group">
+          <h3>Observability</h3>
+          <p>Splunk, Grafana, AppDynamics, Elastic</p>
+        </div>
+        <div class="skill-group">
+          <h3>Architecture</h3>
+          <p>Distributed systems, microservices, event&#8209;driven design, REST, WebSockets</p>
+        </div>
+        <div class="skill-group">
+          <h3>Domain</h3>
+          <p>Fixed income and securitized products, trade lifecycle, positions and PnL, client pricing, RFQ, BWIC and OWIC</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="section section-tight">
+    <div class="wrap">
+      <h2 class="section-title"><span class="tag">05</span>Education</h2>
+      <p class="edu-line"><strong>B.S. in Data Science</strong> &middot; University of Michigan, Ann Arbor, MI &middot; 2016 &ndash; 2020</p>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="wrap">
+      <h2 class="section-title"><span class="tag">06</span>Contact</h2>
+      <p class="section-note">Contact details below load via script to reduce automated harvesting.</p>
+      <ul class="contact-list">
+        <li>
+          <span class="contact-label">Email</span>
+          <span class="contact-value" id="contactEmail" data-user="anupdiwakar1" data-domain="gmail.com">
+            <noscript>anupdiwakar1 [at] gmail [dot] com</noscript>
+          </span>
+        </li>
+        <li>
+          <span class="contact-label">LinkedIn</span>
+          <span class="contact-value"><a href="https://www.linkedin.com/in/anupdiwakar" rel="noopener">linkedin.com/in/anupdiwakar</a></span>
+        </li>
+        <li>
+          <span class="contact-label">GitHub</span>
+          <span class="contact-value"><a href="https://github.com/anup98" rel="noopener">github.com/anup98</a></span>
+        </li>
+        <li>
+          <span class="contact-label">Location</span>
+          <span class="contact-value">New York, NY</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>&copy; <span id="year"></span> Anup Diwakar. Built with HTML, CSS, and JavaScript.</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
